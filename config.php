@@ -97,5 +97,9 @@ const SITE_POST_TYPES = [
   ],
 ];
 
+// 隊員のプロフィール (記事の author に書いた slug と同じ名前の Markdown を置くディレクトリ)
+// 記事の下の「この記事を書いた人」に使う. 不要なら空文字
+const SITE_MEMBERS_DIR = 'content/members';
+
 // URL の形式 (false: ?slug=xxx, ?page=2 / true: xxx/, page/2/ ※ .htaccess のリライトが必要)
 const SITE_PRETTY_URLS = true;

@@ -1,0 +1,87 @@
+/**
+ * Project - Post Author
+ * 記事の下の「この記事を書いた人」
+ */
+
+.postAuthor {
+  margin-block: space("large") 0;
+  padding: space("medium");
+  border-radius: space("small");
+  background-color: rgba(map-get($theme-colors, "primary"), 0.1);
+
+  &__title {
+    margin: 0 0 space("small");
+    color: theme-color("primary-dark");
+    font-weight: 700;
+    font-size: font-size("small");
+    letter-spacing: 0.12em;
+  }
+
+  &__item {
+    & + & {
+      margin-block-start: space("medium");
+      padding-block-start: space("medium");
+      border-block-start: 1px solid rgba(map-get($theme-colors, "primary"), 0.2);
+    }
+  }
+
+  // 写真と, 肩書き・名前を横に並べる
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: space();
+    margin-block-end: space("small");
+  }
+
+  &__image {
+    flex: 0 0 4.5rem;
+    width: 4.5rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    object-fit: cover;
+
+    @media (min-width: breakpoint("sm")) {
+      flex-basis: 6rem;
+      width: 6rem;
+    }
+  }
+
+  &__heading {
+    min-width: 0;
+  }
+
+  &__role {
+    margin: 0;
+    color: theme-color("dark");
+    font-size: font-size("small");
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+  }
+
+  &__name {
+    margin: 0;
+    font-weight: 700;
+    font-size: font-size("medium");
+    line-height: 1.8;
+    letter-spacing: 0.08em;
+  }
+
+  &__text {
+    font-size: font-size("small");
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+
+    p {
+      margin: 0;
+    }
+
+    p + p {
+      margin-block-start: space("small");
+    }
+
+    a {
+      color: theme-color("primary-dark");
+      text-decoration: underline;
+    }
+  }
+}

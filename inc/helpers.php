@@ -110,3 +110,21 @@ function content_engine(string $type, array $options = []): ContentEngine {
     ],
   ]);
 }
+
+// 記事の author ("slug-a, slug-b" のようにカンマ区切り) から, 隊員のプロフィールを取得する
+// プロフィールのファイルがない slug は飛ばす
+function post_authors(string $author): array {
+  if (SITE_MEMBERS_DIR === '') return [];
+  $slugs = array_filter(array_map('trim', explode(',', trim($author, '" '))));
+  if (!$slugs) return [];
+
+  static $loader = null;
+  $loader ??= new ContentLoader(dirname(__DIR__) . '/' . trim(SITE_MEMBERS_DIR, '/') . '/');
+
+  $members = [];
+  foreach ($slugs as $slug) {
+    $member = $loader->find($slug);
+    if ($member) $members[] = $member;
+  }
+  return $members;
+}
