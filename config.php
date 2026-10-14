@@ -101,5 +101,10 @@ const SITE_POST_TYPES = [
 // 記事の下の「この記事を書いた人」に使う. 不要なら空文字
 const SITE_MEMBERS_DIR = 'content/members';
 
+// 投稿タイプ以外のページ (サイトのルートからのパス. サイトマップに載せる)
+const SITE_PAGES = [
+  'about-us/',
+];
+
 // URL の形式 (false: ?slug=xxx, ?page=2 / true: xxx/, page/2/ ※ .htaccess のリライトが必要)
 const SITE_PRETTY_URLS = true;

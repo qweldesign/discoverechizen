@@ -118,13 +118,29 @@ function post_authors(string $author): array {
   $slugs = array_filter(array_map('trim', explode(',', trim($author, '" '))));
   if (!$slugs) return [];
 
-  static $loader = null;
-  $loader ??= new ContentLoader(dirname(__DIR__) . '/' . trim(SITE_MEMBERS_DIR, '/') . '/');
-
   $members = [];
   foreach ($slugs as $slug) {
-    $member = $loader->find($slug);
+    $member = member($slug);
     if ($member) $members[] = $member;
   }
   return $members;
+}
+
+// 隊員を全員取得する (プロフィールの order の順. order がない隊員は後ろに並べる)
+function members(): array {
+  if (SITE_MEMBERS_DIR === '') return [];
+  static $members = null;
+  if ($members === null) {
+    $members = (new ContentLoader(dirname(__DIR__) . '/' . trim(SITE_MEMBERS_DIR, '/') . '/'))->load();
+    usort($members, fn($a, $b) => (int)($a['order'] ?? 999) <=> (int)($b['order'] ?? 999));
+  }
+  return $members;
+}
+
+// slug から隊員を1人取得する (見つからなければ null)
+function member(string $slug): ?array {
+  foreach (members() as $member) {
+    if (($member['slug'] ?? null) === $slug) return $member;
+  }
+  return null;
 }

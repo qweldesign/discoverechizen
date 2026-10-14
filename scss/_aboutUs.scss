@@ -1,0 +1,145 @@
+/**
+ * Project - About Us
+ * 越前海岸盛り上げ隊とは (/about-us/) と, 隊員プロフィールの一覧 (.memberList)
+ * 段組みの幅・並び順は Utility の flexItem で指定する
+ */
+
+.aboutUs {
+  // 文章と写真の段組み (幅は flexItem-*, 並び順は flexItem-order-* で指定)
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: space("medium") 0;
+    margin-block: 0 space("x-large");
+  }
+
+  &__section {
+    margin-block: 0 space("x-large");
+
+    .aboutUs__row {
+      margin-block-end: space("large");
+    }
+  }
+
+  // 段組みの中の本文 (.entry の文字組みを使い, 余白だけ詰める)
+  &__text {
+    & > :last-child {
+      margin-block-end: 0;
+    }
+
+    h3:first-child {
+      margin-block-start: 0;
+    }
+  }
+
+  // 本文の中で, 声に出す言葉を大きく
+  &__voice {
+    color: theme-color("primary-dark");
+    font-weight: 700;
+    font-size: font-size("large");
+    letter-spacing: 0.1em;
+  }
+
+  &__figure {
+    margin: 0;
+
+    img {
+      border-radius: 0.5rem;
+    }
+
+    figcaption {
+      margin-block-start: space("x-small");
+      color: theme-color("dark");
+      font-size: font-size("small");
+      text-align: center;
+      letter-spacing: 0.06em;
+    }
+
+    // 縦長のマップは幅を抑える
+    &.is-map img {
+      width: auto;
+      max-width: 100%;
+      max-height: 32rem;
+      margin-inline: auto;
+    }
+  }
+
+  // 立ち上げの2人の写真
+  &__founders {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: space();
+  }
+}
+
+// 隊員プロフィールの一覧
+.memberList {
+  @include list-unstyled();
+  display: grid;
+  gap: space("large") space("medium");
+  margin: 0;
+
+  @media (min-width: breakpoint("sm")) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: breakpoint("lg")) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  &__item {
+    margin: 0;
+    border-radius: space("medium");
+    scroll-margin-block-start: space("large");
+    background-color: rgba(map-get($theme-colors, "primary"), 0.1);
+    box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+
+  &__image {
+    margin-block-end: space();
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  &__role {
+    margin: space("x-small") 0 0;
+    padding-inline: space("medium");
+    color: theme-color("dark");
+    font-size: font-size("small");
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+  }
+
+  &__name {
+    margin: 0;
+    padding-inline: space("medium");
+    font-weight: 700;
+    font-size: font-size("medium");
+    line-height: 1.8;
+    letter-spacing: 0.08em;
+  }
+
+  &__text {
+    padding: space("small") space("medium") space("medium");
+    font-size: font-size("small");
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+
+    p {
+      margin: 0;
+    }
+
+    p + p {
+      margin-block-start: 0.75em;
+    }
+
+    a {
+      color: theme-color("primary-dark");
+      text-decoration: underline;
+      text-underline-offset: 0.25em;
+    }
+  }
+}
