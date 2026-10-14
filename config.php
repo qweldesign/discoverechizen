@@ -47,7 +47,14 @@ const SITE_HERO_INTERVAL = 5000;
 const SITE_FOOTER_LOGO = 'assets/logo/discover-echizen-coast-wide.svg';
 
 // ヘッダーのナビ (サイトのルートからのパス => 表示名. 不要なら空の配列)
-const SITE_NAV = [];
+// 「#」から始まるものはトップページのセクションへのリンク (トップでは #xxx, ほかのページでは /#xxx にする)
+// モバイルではドロワーメニューに同じ項目を出す. トップでは ScrollSpy で今いるセクションに is-current が付く
+const SITE_NAV = [
+  '#about'   => '私たちについて',
+  '#blog'    => 'ブログ&ニュース',
+  '#members' => '隊員紹介',
+  '#contact' => 'お問い合わせ',
+];
 
 // パンくずの先頭の階層 (path はサイトのルートからのパス, または http から始まる URL)
 const SITE_BREADCRUMB = [

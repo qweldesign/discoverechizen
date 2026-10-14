@@ -30,7 +30,7 @@ render_header([
       <?= $breadcrumb->breadcrumb() ?>
 <?php render_title_area(ABOUT_US_TITLE, 'about us', 'h1', 'main__titleArea'); ?>
       <div class="aboutUs">
-        <section class="aboutUs__row">
+        <section class="aboutUs__row" data-readable>
           <figure class="aboutUs__figure flexItem-5 flexItem-order-md-1">
             <img src="<?= e(path('content/images/members/00.jpg')) ?>" alt="越前海岸盛り上げ隊の隊員たち" width="720" height="400">
           </figure>
@@ -41,7 +41,7 @@ render_header([
           </div>
         </section>
 
-        <section class="aboutUs__row">
+        <section class="aboutUs__row" data-readable>
           <div class="aboutUs__text entry flexItem-4 flexItem-order-md-1">
             <p>過疎化の波は大きいけれど、工夫次第でいかようにも乗りこなせるはず。</p>
             <p class="aboutUs__voice">「この村に生まれてよかった」</p>
@@ -56,7 +56,7 @@ render_header([
 
         <section class="aboutUs__section">
 <?php render_title_area('盛り上げ隊の立ち上げ', 'our story'); ?>
-          <div class="aboutUs__row">
+          <div class="aboutUs__row" data-readable>
             <div class="aboutUs__text entry flexItem-5">
               <p>越前海岸盛り上げ隊発足のきっかけとなったのは、現隊長の長谷川渡と現副隊長の枩田卓也という二人の男たちの出会い。Uターンで地元に戻ってきた長谷川がガラス工房を開いたという噂を聞きつけ、枩田が挨拶に出向いたことをきっかけにつながった二人。以降、過疎化の進む越前海岸の未来について夕日を見ながら語り合う仲となります。</p>
               <p>そんなタイミングで行政（福井市）から「団体をつくってみないか？」と声かけがあったこともあり、旅館や飲食業を営む事業者を中心にメンバーを集め、「越前海岸盛り上げ隊」が産声をあげることになりました。2015年のことです。そこから今に至るまで、一人また一人と仲間を増やして活動を続けてきました。</p>
@@ -76,7 +76,7 @@ render_header([
 
         <section class="aboutUs__section">
 <?php render_title_area('活動実績', 'activities'); ?>
-          <div class="aboutUs__row">
+          <div class="aboutUs__row" data-readable>
             <div class="aboutUs__text entry flexItem-4">
               <h3>マップづくり</h3>
               <p>越前海岸盛り上げ隊として一番初めに取り組んだのは、越前海岸エリアの観光振興マップの作成です。盛り上げ隊に加入する事業所を中心に、地域の見どころが一目でわかるマップをつくり、各事業所や福井県内各所に設置。マップの内容は毎年アップデートされ、常に越前海岸のフレッシュな情報をお届けするツールとして定着しています。</p>
@@ -87,7 +87,7 @@ render_header([
               <img src="<?= e(path('content/images/about-us/map.jpg')) ?>" alt="越前海岸の観光振興マップ" width="254" height="720" loading="lazy">
             </figure>
           </div>
-          <div class="aboutUs__row">
+          <div class="aboutUs__row" data-readable>
             <div class="aboutUs__text entry flexItem-4">
               <h3>体験コンテンツの開発</h3>
               <p>2017年頃から力を入れて取り組んできたのは、エリア内の体験コンテンツを増やしていくことでした。モノ消費からコト消費への転換を受けて、越前海岸の地域資源を生かした体験コンテンツの開発に着手。出来上がった体験コンテンツの総称は「海の体験博覧会」略して「うみたん」と名付け、2018年の夏から徐々に運用をスタート。ブラッシュアップを重ねながら、海・山・川での様々な体験を多くの方々に楽しんでもらっています。</p>
@@ -97,7 +97,7 @@ render_header([
               <figcaption>ナイトシュノーケル体験の様子</figcaption>
             </figure>
           </div>
-          <div class="aboutUs__row">
+          <div class="aboutUs__row" data-readable>
             <div class="aboutUs__text entry flexItem-4">
               <h3>人の駅プロジェクト</h3>
               <p>当初は越前海岸エリアの観光振興を目的として立ち上がった団体でしたが、近年では地域内外の人々との多様な関係性の構築を図る「人の駅プロジェクト」にも力を入れています。それは、人々とのつながりこそがこの地域の暮らしを子どもたちにつないでいく鍵だと気づいたから。つながることから生まれる無限の可能性が、この地域にチャレンジの気運をもたらしてくれます。それぞれが大小様々なチャレンジを繰り返しながら、エリアの魅力を高めあっています。</p>
@@ -107,7 +107,7 @@ render_header([
               <figcaption>地域内外の交流を築く「人の駅プロジェクト」</figcaption>
             </figure>
           </div>
-          <div class="aboutUs__row">
+          <div class="aboutUs__row" data-readable>
             <div class="aboutUs__text entry flexItem-4">
               <h3>拠点の整備</h3>
               <p>人の駅プロジェクトを進めていくにあたり、2020年には念願の拠点整備にも着手。もともと鍼灸院を営んでいた「はりいしゃ」という屋号の空き家を改修し、越前海岸での滞在と交流の拠点として再生させました。改修資金の調達にあたってはCAMPFIREでのクラウドファンディングにも挑戦。目標金額の197%にあたる296万円を集め、調達を成功させました。「はりいしゃ」は、宿泊や滞在の拠点として、また交流やイベントの会場として活用を進めて行く予定です。</p>

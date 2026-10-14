@@ -57,8 +57,9 @@ function render_header(array $page = []): void {
     <link rel="icon" href="<?= path('favicon.ico') ?>">
   </head>
   <body>
-    <header class="header">
-      <p id="logo" class="header__logo">
+    <div data-scroll-sentinel aria-hidden="true"></div>
+    <header class="header is-active" data-active-header>
+      <p id="logo" class="header__logo" data-site-brand>
         <a href="<?= e(SITE_LOGO_LINK ?: path()) ?>">
 <?php if (SITE_LOGO) { ?>
           <img src="<?= path(SITE_LOGO) ?>" alt="<?= e(SITE_NAME) ?>">
@@ -69,9 +70,12 @@ function render_header(array $page = []): void {
       </p>
 <?php if (SITE_NAV) { ?>
       <nav class="header__nav" aria-label="グローバルナビゲーション">
-        <ul>
-<?php foreach (SITE_NAV as $navPath => $label) { ?>
-          <li><a href="<?= e(path($navPath)) ?>"><?= e($label) ?></a></li>
+        <ul data-primary-menu>
+<?php foreach (SITE_NAV as $navPath => $label) {
+  // トップページのセクションへのリンクは, トップ以外では /#xxx にする (ScrollSpy は #xxx で照合する)
+  $href = str_starts_with($navPath, '#') ? (($page['path'] ?? null) === '' ? $navPath : path() . $navPath) : path($navPath);
+?>
+          <li data-spy-nav><a href="<?= e($href) ?>"><?= e($label) ?></a></li>
 <?php } ?>
         </ul>
       </nav>
@@ -128,7 +132,7 @@ function render_footer(): void {
 function render_title_area(string $label, string $en = '', string $tag = 'h2', string $class = ''): void {
   $classes = trim('titleArea ' . $class);
   ?>
-        <div class="<?= e($classes) ?>">
+        <div class="<?= e($classes) ?>" data-readable>
           <<?= $tag ?> class="titleArea__title">
 <?php if ($en !== '') { ?>
             <span class="titleArea__en" lang="en" aria-hidden="true"><?= e($en) ?></span>

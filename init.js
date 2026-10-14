@@ -1,6 +1,10 @@
 // Action Core
 import ActionCore from './js/action-core.js';
+new ActionCore.ActiveHeader();
 new ActionCore.BackToTop();
+new ActionCore.DrawerMenu();
+new ActionCore.ScrollSpy();
+new ActionCore.ReadableOnScroll();
 
 // Fader (トップページのメインギャラリー)
 import Fader from './js/fader.js';

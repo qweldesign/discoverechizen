@@ -17,16 +17,11 @@ $container-pads: (
   lg:                clamp(1.25rem, 4%, 1.5rem)
 );
 
+// ドロワー
+$drawer-site-brand-width:  10.5rem;
+
 // メインギャラリーの写真は index.php で指定するので, Fader の既定の画像クラスは出力しない
 $gallery-image-count: 0;
-
-// コンテナの左右の余白 (ガター)
-// 既定 (clamp(0.75rem, 2%, 1.5rem)) ではモバイルで狭すぎるため, 最小を 1.25rem に広げる
-$container-pads: (
-  sm:                0.75rem,
-  md:                clamp(1.25rem, 4%, 1.5rem),
-  lg:                clamp(1.25rem, 4%, 1.5rem)
-);
 
 // スライダー
 $slider-aspect-ratio: 2;

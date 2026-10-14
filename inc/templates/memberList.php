@@ -17,7 +17,7 @@ function render_member_list(array $members, string $class = ''): void {
 ?>
         <ul class="<?= e(trim('memberList ' . $class)) ?>">
 <?php foreach ($members as $member) { ?>
-          <li class="memberList__item" id="member-<?= e($member['slug'] ?? '') ?>">
+          <li class="memberList__item" id="member-<?= e($member['slug'] ?? '') ?>" data-readable>
 <?php if (!empty($member['img'])) { ?>
             <img class="memberList__image" src="<?= e(path($member['img'])) ?>" alt="" width="360" height="240" loading="lazy">
 <?php } ?>

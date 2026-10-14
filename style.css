@@ -187,15 +187,25 @@ button, input, select, textarea {
 
 /**
  * Layout - Header
- * 左上にロゴ (wide) を置く. ナビは今のところ持たない
+ * 左上にロゴ (wide), 右にナビ (config.php の SITE_NAV) を置く
+ * モバイル (md 未満) ではナビを隠し, ActionCore の DrawerMenu に任せる
+ *
+ * 画面上部に固定し, 次のときは背景を白にする (ロゴ・ナビも白抜きをやめて元の色に戻す)
+ * - 1px 以上スクロールしたとき (ActionCore の ActiveHeader が is-active を外す)
+ * - マウスを乗せたとき
  */
 .header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing--medium);
   width: 100%;
   padding: var(--spacing--small) clamp(0.75rem, 2%, 1.5rem);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 #logo {
@@ -209,6 +219,11 @@ button, input, select, textarea {
   filter: invert(1) grayscale(1) brightness(4);
 }
 
+@media (max-width: 899.9px) {
+  .header__nav {
+    display: none;
+  }
+}
 .header__nav ul {
   list-style: none;
   padding-inline-start: 0;
@@ -217,12 +232,65 @@ button, input, select, textarea {
   gap: var(--spacing--x-small) var(--spacing--medium);
   margin: 0;
   font-size: var(--font-size--small);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.header__nav li {
+  margin: 0;
+}
+.header__nav a {
+  display: block;
+  padding-block: var(--spacing--x-small);
+  border-bottom: 2px solid transparent;
+  color: var(--color--primary-dark);
+  text-decoration: none;
+  transition: border-color 0.25s ease;
+}
+.header__nav a:hover, .header__nav a:focus-visible {
+  border-bottom-color: currentColor;
+}
+.header__nav .is-current a {
+  border-bottom-color: currentColor;
+}
+.header:not(:has(+ .main)) .header__nav a {
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .header + .main {
   padding-block-start: 6rem;
 }
 
+.header:not(.is-active) {
+  background-color: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+.header:not(.is-active) #logo img {
+  filter: none;
+}
+.header:not(.is-active) .header__nav a {
+  color: var(--color--primary-dark);
+  text-shadow: none;
+}
+
+@media (hover: hover) {
+  .header:hover {
+    background-color: #fff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  }
+  .header:hover #logo img {
+    filter: none;
+  }
+  .header:hover .header__nav a {
+    color: var(--color--primary-dark);
+    text-shadow: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header {
+    transition: none;
+  }
+}
 /**
  * Layout - Main
  * ブログ (一覧・個別記事) を中心に, 読みやすい行長・行間・余白に揃える
@@ -847,7 +915,9 @@ button, input, select, textarea {
   padding: 0 0 0 20%;
 }
 .drawerMenu__item.is-siteBrand img {
-  width: 6rem;
+  width: 10.5rem;
+  height: auto;
+  filter: invert(1) grayscale(1) brightness(4);
 }
 .drawerMenu__item.is-social {
   width: -moz-fit-content;

@@ -37,9 +37,9 @@ render_header([
       </h1>
     </div>
     <main id="main" class="main">
-      <section class="section" id="about">
+      <section class="section" id="about" data-spy-section>
 <?php render_title_area('私たちについて', 'about us'); ?>
-        <div class="section__row">
+        <div class="section__row" data-readable>
           <figure class="flexItem-5">
             <img src="<?= e(path('content/images/members/00.jpg')) ?>" alt="越前海岸盛り上げ隊の隊員たち" width="720" height="400" loading="lazy">
           </figure>
@@ -51,7 +51,7 @@ render_header([
         </div>
       </section>
 
-      <section class="section" id="blog">
+      <section class="section" id="blog" data-spy-section>
 <?php render_title_area(post_type('blog')['label'], post_type('blog')['en']); ?>
 <?php if ($latest) { ?>
 <?php render_post_list($latest, 'blog'); ?>
@@ -62,7 +62,7 @@ render_header([
       </section>
 
 <?php if (members()) { ?>
-      <section class="section is-wide waveArea" id="members">
+      <section class="section is-wide waveArea" id="members" data-spy-section>
         <div class="waveArea__inner">
 <?php render_title_area('隊員紹介', 'members'); ?>
 <?php render_member_list(members(), 'is-scroll'); ?>
@@ -71,7 +71,7 @@ render_header([
 <?php } ?>
 
 <?php if (SITE_BANNERS) { ?>
-      <section class="section is-wide" id="banners" aria-label="関連する活動">
+      <section class="section is-wide" id="banners" aria-label="関連する活動" data-readable>
         <div class="slider" data-gallery="slider" data-gap="48" data-interval="5000">
           <ul class="slider__inner" data-gallery-main>
 <?php foreach (SITE_BANNERS as $banner) {
@@ -87,10 +87,10 @@ render_header([
       </section>
 <?php } ?>
 
-      <section class="section" id="contact">
+      <section class="section" id="contact" data-spy-section>
 <?php render_title_area('お問い合わせ', 'contact'); ?>
-        <p class="section__lead">越前海岸盛り上げ隊へのご質問・ご相談は、こちらのフォームからお気軽にお寄せください。</p>
-        <form class="form" data-contact-form>
+        <p class="section__lead" data-readable>越前海岸盛り上げ隊へのご質問・ご相談は、こちらのフォームからお気軽にお寄せください。</p>
+        <form class="form" data-contact-form data-readable>
           <table>
             <tr>
               <th><label for="your-name">お名前<span class="is-required">*必須</span></label></th>

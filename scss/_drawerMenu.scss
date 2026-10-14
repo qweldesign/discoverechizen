@@ -149,8 +149,11 @@ $drawer-site-brand-width:    6rem !default;
         padding: 0 0 0 20%;
       }
 
+      // ヘッダーから複製したロゴは, ドロワーの背景の上で白抜きにする
       img {
         width: $drawer-site-brand-width;
+        height: auto;
+        filter: invert(1) grayscale(1) brightness(4);
       }
     }
 
