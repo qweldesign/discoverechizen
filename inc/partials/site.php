@@ -117,3 +117,24 @@ function render_footer(): void {
 </html>
 <?php
 }
+
+/**
+ * 見出し (titleArea コンポーネント)
+ * $label: 見出し (日本語)
+ * $en: 上に重ねる英語 (空文字なら出さない)
+ * $tag: 見出しの要素 (トップのセクションは h2, 一覧ページは h1)
+ * $class: 外側に足すクラス (配置する側の要素. 例: main__titleArea)
+ */
+function render_title_area(string $label, string $en = '', string $tag = 'h2', string $class = ''): void {
+  $classes = trim('titleArea ' . $class);
+  ?>
+        <div class="<?= e($classes) ?>">
+          <<?= $tag ?> class="titleArea__title">
+<?php if ($en !== '') { ?>
+            <span class="titleArea__en" lang="en" aria-hidden="true"><?= e($en) ?></span>
+<?php } ?>
+            <span class="titleArea__ja"><?= e($label) ?></span>
+          </<?= $tag ?>>
+        </div>
+<?php
+}

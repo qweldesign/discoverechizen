@@ -38,6 +38,11 @@ $aside-width:   12rem;
     margin-block-end: space("large");
   }
 
+  // 一覧ページの見出し (titleArea と組み合わせる). パンくずとの間を空ける
+  &__titleArea {
+    margin-block-start: space("large");
+  }
+
   // 個別記事のタイトルと日付の下に区切り線を引く
   &__article > &__date {
     padding-block-end: space("medium");

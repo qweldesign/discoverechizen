@@ -105,7 +105,7 @@ function render_posts(string $type, array $options = []): void {
 <?php if (isset($options['intro']) && $cms->get_page() === 1) { ?>
 <?php $options['intro'](); ?>
 <?php } else { ?>
-      <h1 class="main__title"><?= e($label) ?></h1>
+<?php render_title_area($label, $config['en'], 'h1', 'main__titleArea'); ?>
 <?php if ($config['lead']) { ?>
       <p class="main__lead"><?= e($config['lead']) ?></p>
 <?php } ?>

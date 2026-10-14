@@ -74,10 +74,12 @@ const SITE_START_YEAR = 2015;
  * count: 一覧の1ページあたりの件数 (null で全件)
  * show_date: 日付を表示するか
  * lead: 一覧の見出しの下の文
+ * en: 見出しの上に重ねる英語 (トップのセクションと一覧ページの見出し. 不要なら空文字)
  */
 const SITE_POST_TYPES = [
   'blog' => [
     'label'     => 'ブログ&ニュース',
+    'en'        => 'blog & news',
     'path'      => 'blog-and-news/',
     'dir'       => 'content/blog',
     'count'     => 10,

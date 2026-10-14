@@ -32,12 +32,7 @@ render_header([
     </div>
     <main id="main" class="main">
       <section class="section">
-        <div class="section__titleArea">
-          <h2 class="section__title">
-            <span class="section__titleText is-top" lang="en" aria-hidden="true">blog &amp; news</span>
-            <span class="section__titleText is-bottom"><?= e(post_type('blog')['label']) ?></span>
-          </h2>
-        </div>
+<?php render_title_area(post_type('blog')['label'], post_type('blog')['en']); ?>
 <?php if ($latest) { ?>
 <?php render_post_list($latest, 'blog'); ?>
         <p class="section__more"><a href="<?= e(type_url('blog')) ?>">&gt;&gt;&gt; <?= e(post_type('blog')['label']) ?>をもっと見る</a></p>

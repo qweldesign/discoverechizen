@@ -252,6 +252,9 @@ button, input, select, textarea {
 .main > .main__title {
   margin-block-end: var(--spacing--large);
 }
+.main__titleArea {
+  margin-block-start: var(--spacing--large);
+}
 .main__article > .main__date {
   padding-block-end: var(--spacing--medium);
   border-block-end: 1px solid var(--color--lighter);
@@ -927,6 +930,83 @@ button, input, select, textarea {
 }
 
 /**
+ * Component - Title Area
+ * 見出し (左右に波の装飾. 英語を上に大きく, 日本語を下に小さく重ねる)
+ *
+ * <div class="titleArea">
+ *   <h2 class="titleArea__title">
+ *     <span class="titleArea__en" lang="en" aria-hidden="true">blog &amp; news</span>
+ *     <span class="titleArea__ja">ブログ&amp;ニュース</span>
+ *   </h2>
+ * </div>
+ */
+.titleArea {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  height: 6rem;
+  margin: 0 auto var(--spacing--large);
+  background: url("./assets/logo/dec-sm.svg") no-repeat right top;
+}
+@media (min-width: 900px) {
+  .titleArea {
+    justify-content: space-around;
+    background: none;
+  }
+}
+@media (min-width: 900px) {
+  .titleArea::before, .titleArea::after {
+    content: "";
+    width: 12rem;
+    background: url("./assets/logo/dec.svg") round no-repeat left center;
+  }
+}
+@media (min-width: 1200px) {
+  .titleArea::before, .titleArea::after {
+    width: 18rem;
+  }
+}
+.titleArea__title {
+  position: relative;
+  width: 21rem;
+  margin: 0;
+  color: var(--color--primary);
+  font-weight: 700;
+  font-size: var(--font-size--x-large);
+  text-align: left;
+}
+@media (min-width: 900px) {
+  .titleArea__title {
+    text-align: center;
+  }
+}
+.titleArea__en, .titleArea__ja {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: block;
+  margin: auto;
+}
+.titleArea__en {
+  top: 0;
+  width: 125%;
+  height: 4.5rem;
+  font-style: italic;
+  font-size: 150%;
+  line-height: 4.5rem;
+  letter-spacing: 0.08em;
+  text-transform: capitalize;
+  transform: scale(0.8333, 1) translate(-10%, 0);
+}
+.titleArea__ja {
+  bottom: 0;
+  width: 100%;
+  height: 1.5rem;
+  font-size: 75%;
+  line-height: 1.5rem;
+}
+
+/**
  * Component - Modal
  */
 .modal {
@@ -1569,72 +1649,6 @@ button, input, select, textarea {
  */
 .section {
   padding-block: var(--spacing--x-large);
-}
-.section__titleArea {
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  height: 6rem;
-  margin: 0 auto var(--spacing--large);
-  background: url("./assets/logo/dec-sm.svg") no-repeat right top;
-}
-@media (min-width: 900px) {
-  .section__titleArea {
-    justify-content: space-around;
-    background: none;
-  }
-}
-@media (min-width: 900px) {
-  .section__titleArea::before, .section__titleArea::after {
-    content: "";
-    width: 12rem;
-    background: url("./assets/logo/dec.svg") round no-repeat left center;
-  }
-}
-@media (min-width: 1200px) {
-  .section__titleArea::before, .section__titleArea::after {
-    width: 18rem;
-  }
-}
-.section__title {
-  position: relative;
-  width: 21rem;
-  margin: 0;
-  color: var(--color--primary);
-  font-weight: 700;
-  font-size: var(--font-size--x-large);
-  text-align: left;
-}
-@media (min-width: 900px) {
-  .section__title {
-    text-align: center;
-  }
-}
-.section__titleText {
-  position: absolute;
-  left: 0;
-  right: 0;
-  display: block;
-  margin: auto;
-}
-.section__titleText.is-bottom {
-  bottom: 0;
-  width: 100%;
-  height: 1.5rem;
-  font-size: 75%;
-  line-height: 1.5rem;
-}
-.section__titleText.is-top {
-  top: 0;
-  width: 125%;
-  height: 4.5rem;
-  color: var(--color--primary);
-  font-style: italic;
-  font-size: 150%;
-  line-height: 4.5rem;
-  letter-spacing: 0.08em;
-  text-transform: capitalize;
-  transform: scale(0.8333, 1) translate(-10%, 0);
 }
 .section__more, .section__empty {
   margin-block: var(--spacing--x-large) 0;
