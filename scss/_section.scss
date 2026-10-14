@@ -1,0 +1,84 @@
+/**
+ * Project - Section
+ * トップページの各セクション (見出しは現行サイトの titleArea に合わせる)
+ */
+
+.section {
+  padding-block: space("x-large");
+
+  &__titleArea {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 6rem;
+    margin: 0 auto space("large");
+    background: url("./assets/logo/dec-sm.svg") no-repeat right top;
+
+    @media (min-width: breakpoint("md")) {
+      justify-content: space-around;
+      background: none;
+    }
+
+    &::before, &::after {
+      @media (min-width: breakpoint("md")) {
+        content: "";
+        width: 12rem;
+        background: url("./assets/logo/dec.svg") round no-repeat left center;
+      }
+
+      @media (min-width: breakpoint("lg")) {
+        width: 18rem;
+      }
+    }
+  }
+
+  &__title {
+    position: relative;
+    width: 21rem;
+    margin: 0;
+    color: theme-color("primary");
+    font-weight: 700;
+    font-size: font-size("x-large");
+    text-align: left;
+
+    @media (min-width: breakpoint("md")) {
+      text-align: center;
+    }
+  }
+
+  &__titleText {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: block;
+    margin: auto;
+
+    // 日本語 (下)
+    &.is-bottom {
+      bottom: 0;
+      width: 100%;
+      height: 1.5rem;
+      font-size: 75%;
+      line-height: 1.5rem;
+    }
+
+    // 英語 (上. 横長に変形した斜体)
+    &.is-top {
+      top: 0;
+      width: 125%;
+      height: 4.5rem;
+      color: theme-color("primary");
+      font-style: italic;
+      font-size: 150%;
+      line-height: 4.5rem;
+      letter-spacing: 0.08em;
+      text-transform: capitalize;
+      transform: scale(0.8333, 1) translate(-10%, 0);
+    }
+  }
+
+  &__more, &__empty {
+    margin-block: space("large") 0;
+    text-align: center;
+  }
+}

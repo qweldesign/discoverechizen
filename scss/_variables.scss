@@ -1,2 +1,13 @@
 // Variables
+// 越前海岸盛り上げ隊 (https://discoverechizen.com/) の配色・書体に合わせる
 
+$colors:             (
+  primary:             #37bef0,
+  primary-dark:        #18aada,
+  secondary:           #9bcb6b
+);
+
+$theme-accent:       "primary-dark";
+
+// メインギャラリーの写真は index.php で指定するので, Fader の既定の画像クラスは出力しない
+$gallery-image-count: 0;

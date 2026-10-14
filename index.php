@@ -1,39 +1,49 @@
 <?php
 /**
  * トップページ
- * このエンジンの紹介と, ブログの最新記事を並べる
+ * メインギャラリー (Fader) と, ブログ&ニュースの最新記事を並べる
  * 一覧・個別記事は投稿タイプのディレクトリ (blog/, page/) が表示する
  */
 require_once __DIR__ . '/inc/templates/postList.php';
 
-$blog = content_engine('blog', ['slug' => null, 'page' => 1]);
-$latest = $blog->get_posts(1, 3);
+// トップに並べる記事の件数
+const HOME_POST_COUNT = 5;
 
-// パンくず (SITE_BREADCRUMB の最後の階層 = このサイトのトップが現在地)
-$parents = SITE_BREADCRUMB;
-$current = array_pop($parents);
-$breadcrumb = new ContentNavigation([
-  'parents'     => array_map(fn($crumb) => ['label' => $crumb['label'], 'path' => path($crumb['path'])], $parents),
-  'subdirLabel' => $current['label'] ?? SITE_NAME,
-  'subdirPath'  => path(),
-]);
+$blog = content_engine('blog', ['slug' => null, 'page' => 1]);
+$latest = $blog->get_posts(1, HOME_POST_COUNT);
 
 render_header([
-  'path' => '',
-  'type' => 'website',
+  'full_title' => SITE_HOME_TITLE,
+  'path'       => '',
+  'type'       => 'website',
 ]);
 ?>
+    <div class="hero">
+      <div class="hero__gallery fader" data-gallery="fader" data-interval="<?= (int)SITE_HERO_INTERVAL ?>">
+        <ul class="fader__inner">
+<?php foreach (SITE_HERO_PHOTOS as $photo) { ?>
+          <li class="fader__item hero__photo" data-gallery-item style="background-image: url('<?= e(path($photo)) ?>');"></li>
+<?php } ?>
+        </ul>
+      </div>
+      <h1 class="hero__title">
+        <img class="hero__logo" src="<?= e(path(SITE_HERO_LOGO)) ?>" alt="<?= e(SITE_NAME) ?>" width="320" height="320">
+      </h1>
+    </div>
     <main id="main" class="main">
-      <?= $breadcrumb->breadcrumb() ?>
-      <h1 class="main__title">Simple CMS | Created by <span> ― QWEL.DESIGN</span></h1>
-      <ul class="main__list">
-        <li class="main__listItem is-spec">Markdown を HTML に変換して表示</li>
-        <li class="main__listItem is-spec">パンくずリストやページネーションを自動生成</li>
-        <li class="main__listItem is-spec">データベース不要、ファイルベースで管理</li>
-        <li class="main__listItem is-spec">PHP のみで動作、軽量・シンプル</li>
-      </ul>
-      <h2 class="text-center my-large">SAMPLE BLOG</h2>
+      <section class="section">
+        <div class="section__titleArea">
+          <h2 class="section__title">
+            <span class="section__titleText is-top" lang="en" aria-hidden="true">blog &amp; news</span>
+            <span class="section__titleText is-bottom"><?= e(post_type('blog')['label']) ?></span>
+          </h2>
+        </div>
+<?php if ($latest) { ?>
 <?php render_post_list($latest, 'blog'); ?>
-      <p class="text-center my-large"><a href="<?= e(type_url('blog')) ?>">記事の一覧へ</a></p>
+        <p class="section__more"><a href="<?= e(type_url('blog')) ?>">&gt;&gt;&gt; <?= e(post_type('blog')['label']) ?>をもっと見る</a></p>
+<?php } else { ?>
+        <p class="section__empty">記事はまだありません。</p>
+<?php } ?>
+      </section>
     </main>
 <?php render_footer(); ?>

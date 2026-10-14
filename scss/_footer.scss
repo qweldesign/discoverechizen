@@ -1,11 +1,24 @@
 /**
  * Layout - Footer
+ * 現行サイトに合わせ, ロゴと著作権表示だけのシンプルなフッター
  */
 
 .footer {
-  padding: space("x-large") 0;
-  @include background("primary");
+  padding: space("x-large") space();
+  @include background("primary-dark");
   text-align: center;
+
+  &__logo {
+    width: 15rem;
+    margin: 0 auto space("medium");
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: invert(1) grayscale(1) brightness(4); // 白抜き
+    }
+  }
 
   &__inner {
     @include row(center);
@@ -34,7 +47,6 @@
 
   &__copyright {
     display: block;
-    margin-block-start: space("medium");
   }
 
   small {

@@ -3,3 +3,10 @@
 
 # Node_modules
 node_modules/
+
+# content
+/content/*
+!/content/.htaccess
+!/content/images/
+/content/images/*
+!/content/images/.htaccess

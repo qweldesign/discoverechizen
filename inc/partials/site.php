@@ -84,6 +84,9 @@ function render_header(array $page = []): void {
 function render_footer(): void {
   ?>
     <footer id="footer" class="footer">
+<?php if (SITE_FOOTER_LOGO) { ?>
+      <p class="footer__logo"><img src="<?= path(SITE_FOOTER_LOGO) ?>" alt="<?= e(SITE_NAME) ?>" width="240" height="80"></p>
+<?php } ?>
 <?php if (SITE_FOOTER_LINKS) { ?>
       <nav class="footer__nav" aria-label="サイト内のページ">
         <ul>
