@@ -4,13 +4,15 @@
  */
 
 .footer {
+  @include row(center, center);
+  gap: space("medium");
   padding: space("x-large") space();
   @include background("primary-dark");
   text-align: center;
 
   &__logo {
     width: 15rem;
-    margin: 0 auto space("medium");
+    margin: 0 0 space("medium");
 
     img {
       display: block;

@@ -4,10 +4,13 @@
 $colors:             (
   primary:             #37bef0,
   primary-dark:        #18aada,
-  secondary:           #9bcb6b
+  secondary:           #f08c1e
 );
 
 $theme-accent:       "primary-dark";
 
 // メインギャラリーの写真は index.php で指定するので, Fader の既定の画像クラスは出力しない
 $gallery-image-count: 0;
+
+// スライダー
+$slider-aspect-ratio: 2;

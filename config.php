@@ -101,6 +101,16 @@ const SITE_POST_TYPES = [
 // 記事の下の「この記事を書いた人」に使う. 不要なら空文字
 const SITE_MEMBERS_DIR = 'content/members';
 
+// トップページのバナーエリア (スライダー)
+// url: リンク先 (サイトのルートからのパス, または http から始まる URL. 外部リンクは別タブで開く)
+// img: 画像 (サイトのルートからのパス, または http から始まる URL. 外部サイトは各サイトの OGP 画像)
+const SITE_BANNERS = [
+  ['title' => '越前海岸盛り上げ隊とは', 'url' => 'about-us/', 'img' => 'assets/banners/members.jpg'],
+  ['title' => '海辺の古民家はりいしゃ', 'url' => 'https://hariisha.jp/', 'img' => 'assets/banners/hariisha-jp.jpg'],
+  ['title' => '国見 海・人・暮らし相談室', 'url' => 'https://kunimi.life/', 'img' => 'assets/banners/kunimi-life.jpg'],
+  ['title' => 'つるつるいっぱい浜ラジオ', 'url' => 'blog-and-news/podcast-start/', 'img' => 'assets/banners/podcast.jpg'],
+];
+
 // 投稿タイプ以外のページ (サイトのルートからのパス. サイトマップに載せる)
 const SITE_PAGES = [
   'about-us/',

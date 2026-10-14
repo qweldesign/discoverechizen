@@ -10,3 +10,7 @@ node_modules/
 !/content/images/
 /content/images/*
 !/content/images/.htaccess
+
+# Contact Form API
+/api/vendor/
+/api/.env

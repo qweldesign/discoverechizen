@@ -25,8 +25,8 @@
   --color--primary--active: rgb(13.4651162791, 134.6511627907, 179.5348837209);
   --color--primary-dark: #18aada;
   --color--primary-dark--active: rgb(105.4628099174, 205.6115702479, 238.5371900826);
-  --color--secondary: #9bcb6b;
-  --color--secondary--active: rgb(104, 153.92, 54.08);
+  --color--secondary: #f08c1e;
+  --color--secondary--active: rgb(157.5, 87.5, 10.5);
   --container-width--sm: 37.5rem;
   --container-width--md: 56.25rem;
   --container-width--lg: 75rem;
@@ -306,6 +306,11 @@ button, input, select, textarea {
  * 現行サイトに合わせ, ロゴと著作権表示だけのシンプルなフッター
  */
 .footer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing--medium);
   padding: var(--spacing--x-large) var(--spacing--small);
   background-color: var(--color--primary-dark);
   color: var(--color--lightest);
@@ -323,7 +328,7 @@ button, input, select, textarea {
 }
 .footer__logo {
   width: 15rem;
-  margin: 0 auto var(--spacing--medium);
+  margin: 0 0 var(--spacing--medium);
 }
 .footer__logo img {
   display: block;
@@ -1099,7 +1104,7 @@ button, input, select, textarea {
 .slider {
   position: relative;
   width: 100%;
-  height: calc(83.33vmin / 1.6);
+  height: calc(83.33vmin / 2);
   margin-block-start: 3rem;
   overflow: hidden;
 }
@@ -1130,7 +1135,7 @@ button, input, select, textarea {
 }
 .slider__item img {
   width: 83.33vmin;
-  aspect-ratio: 1.6;
+  aspect-ratio: 2;
   -o-object-fit: cover;
      object-fit: cover;
   margin: 0;
@@ -1846,6 +1851,13 @@ button, input, select, textarea {
 .section {
   padding-block: var(--spacing--x-large);
 }
+.section__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing--medium) 0;
+}
 .section__more, .section__empty {
   margin-block: var(--spacing--x-large) 0;
   text-align: center;
@@ -1857,6 +1869,94 @@ button, input, select, textarea {
 }
 .section__more a:hover, .section__more a:focus {
   text-decoration: underline;
+}
+
+/**
+ * Project - Home
+ * トップページのセクションの追加分 (私たちについて, 隊員紹介の波, バナーエリア, お問い合わせ)
+ */
+body {
+  overflow-x: clip;
+}
+
+.section.is-wide {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+.section__more.is-start {
+  margin-block-start: var(--spacing--medium);
+  text-align: left;
+}
+.section__lead {
+  margin-block: 0 var(--spacing--large);
+  text-align: center;
+  letter-spacing: 0.06em;
+}
+
+.waveArea {
+  position: relative;
+  margin-block: 4.5rem;
+  padding-block-end: calc(var(--spacing--x-large) + 1rem);
+  background-color: #18aada;
+}
+.waveArea::before, .waveArea::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath fill='%2318aada' d='M0 20 Q150 0 300 20 T600 20 T900 20 T1200 20 V40 H0Z'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath fill='%2337bef0' d='M0 20 Q150 0 300 20 T600 20 T900 20 T1200 20 V40 H0Z'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 1200px 70%, 800px 100%;
+  background-position: 0 bottom, 0 bottom;
+  animation: waveArea-flow 24s linear infinite;
+  pointer-events: none;
+}
+.waveArea::before {
+  bottom: 100%;
+}
+.waveArea::after {
+  top: 100%;
+  transform: scaleY(-1);
+  animation-direction: reverse;
+}
+.waveArea__inner {
+  width: min(100%, var(--container-width--lg));
+  margin-inline: auto;
+  padding-inline: var(--container-pad--lg);
+  position: relative;
+}
+.waveArea .titleArea {
+  margin-block-start: 0;
+  background: none;
+}
+.waveArea .titleArea::before, .waveArea .titleArea::after {
+  filter: brightness(0) invert(1);
+}
+.waveArea .titleArea__title {
+  color: #fff;
+}
+.waveArea .memberList__item {
+  background-color: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+@media (prefers-reduced-motion: reduce) {
+  .waveArea::before, .waveArea::after {
+    animation: none;
+  }
+}
+
+@keyframes waveArea-flow {
+  from {
+    background-position: 0 bottom, 0 bottom;
+  }
+  to {
+    background-position: 1200px bottom, -800px bottom;
+  }
+}
+#contact .form {
+  max-width: 40rem;
+  margin-inline: auto;
 }
 
 /**
@@ -1946,11 +2046,91 @@ button, input, select, textarea {
   transform: scale(96%);
 }
 .form [type=submit], .form [type=submit]:active {
-  background-color: var(--color--primary);
-  color: var(--color--darkest);
+  background-color: var(--color--primary-dark);
+  color: var(--color--lightest);
 }
 .form [type=submit]:hover, .form [type=submit]:focus {
-  background-color: var(--color--primary--active);
+  background-color: var(--color--primary-dark--active);
+  color: var(--color--darkest);
+}
+
+.confirm {
+  max-width: 40rem;
+  margin-inline: auto;
+  text-align: center;
+}
+.confirm table {
+  width: 100%;
+}
+@media (max-width: 599.9px) {
+  .confirm table, .confirm table thead, .confirm table tbody, .confirm table tr, .confirm table th, .confirm table td {
+    display: block;
+  }
+}
+.confirm table thead, .confirm table tbody {
+  width: 100%;
+}
+.confirm table thead {
+  border: 0;
+}
+.confirm table tr {
+  border-block-end: 1px solid var(--color--lighter);
+}
+.confirm table tr:first-child {
+  border-block-start: 1px solid var(--color--lighter);
+}
+.confirm table th, .confirm table td {
+  padding: var(--spacing--small);
+  border: 0;
+}
+.confirm table {
+  margin-block-end: var(--spacing--large);
+}
+.confirm table th {
+  width: 12rem;
+}
+.confirm table td {
+  text-align: left;
+  white-space: pre-wrap;
+}
+.confirm [type=submit], .confirm [type=button] {
+  display: inline-block;
+  width: 14rem;
+  height: 3.5rem;
+  line-height: 3.5rem;
+  margin: var(--spacing--x-small) var(--spacing--small);
+}
+.confirm [type=submit], .confirm [type=submit]:active, .confirm [type=button], .confirm [type=button]:active {
+  border: 0;
+  border-radius: var(--spacing--x-small);
+  text-align: center;
+  text-decoration: none;
+  word-break: break-word;
+  outline: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.confirm [type=submit]:hover, .confirm [type=submit]:focus, .confirm [type=button]:hover, .confirm [type=button]:focus {
+  text-decoration: none;
+  transform: scale(96%);
+}
+.confirm [type=submit], .confirm [type=submit]:active {
+  background-color: var(--color--primary-dark);
+  color: var(--color--lightest);
+}
+.confirm [type=submit]:hover, .confirm [type=submit]:focus {
+  background-color: var(--color--primary-dark--active);
+  color: var(--color--darkest);
+}
+.confirm [type=button], .confirm [type=button]:active {
+  background-color: var(--color--secondary);
+  color: var(--color--darkest);
+}
+.confirm [type=button]:hover, .confirm [type=button]:focus {
+  background-color: var(--color--secondary--active);
   color: var(--color--lightest);
 }
 

@@ -1,10 +1,11 @@
 <?php
 /**
  * 越前海岸盛り上げ隊とは (/about-us/)
- * 団体の紹介 (文章・写真はこのファイルに書く) と, 隊員プロフィールの一覧 (content/members/ から自動で並べる)
+ * 団体の紹介 (文章・写真はこのファイルに書く)
+ * 隊員プロフィールの一覧はトップページの「隊員紹介」に移した
  * 写真は assets/about-us/ に置く
  */
-require_once dirname(__DIR__) . '/inc/templates/memberList.php';
+require_once dirname(__DIR__) . '/inc/partials/site.php';
 
 const ABOUT_US_TITLE = '越前海岸盛り上げ隊とは';
 
@@ -116,11 +117,6 @@ render_header([
               <figcaption>古民家「はりいしゃ」を整備</figcaption>
             </figure>
           </div>
-        </section>
-
-        <section class="aboutUs__section" id="members">
-<?php render_title_area('隊員プロフィール', 'members'); ?>
-<?php render_member_list(members()); ?>
         </section>
       </div>
     </main>

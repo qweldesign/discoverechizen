@@ -15,5 +15,9 @@
   # サイトマップは sitemap.php が content/ から自動で作る
   RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
+  # お問い合わせの確認・完了画面 (フォームの JS が confirm.html, thanks.html に遷移する)
+  RewriteRule ^confirm\.html$ contact/confirm.php [L]
+  RewriteRule ^thanks\.html$ contact/thanks.php [L]
+
   # 旧バージョン (トップの ?slug=xxx, ?page=2) の URL を, 投稿タイプのディレクトリへ恒久的に転送する
 </IfModule>
