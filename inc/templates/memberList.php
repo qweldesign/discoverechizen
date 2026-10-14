@@ -6,15 +6,16 @@
  * See LICENSE file for details.
  *
  * 隊員プロフィールの一覧 (.memberList). 隊員は members() で取得する
+ * $class: 一覧に足すクラス (例: is-scroll でタブレット以下を横スクロールにする)
  */
 
 require_once dirname(__DIR__) . '/partials/site.php';
 
-function render_member_list(array $members): void {
+function render_member_list(array $members, string $class = ''): void {
   if (!$members) return;
   $parsedown = new Parsedown();
 ?>
-        <ul class="memberList">
+        <ul class="<?= e(trim('memberList ' . $class)) ?>">
 <?php foreach ($members as $member) { ?>
           <li class="memberList__item" id="member-<?= e($member['slug'] ?? '') ?>">
 <?php if (!empty($member['img'])) { ?>

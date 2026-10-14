@@ -89,6 +89,28 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  // トップページ: タブレット以下ではカードを横に流す (PC ではグリッド)
+  &.is-scroll {
+    @media (max-width: breakpoint("lg") - 0.1px) {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: min(80vw, 20rem);
+      gap: space("medium");
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      // 画面端まで流しつつ, 1枚目はコンテナの左端にそろえる
+      scroll-padding-inline: #{container-pad("lg")};
+      padding: space("x-small") #{container-pad("lg")} space("medium");
+      margin-inline: calc(-1 * #{container-pad("lg")});
+      scrollbar-width: thin;
+
+      .memberList__item {
+        scroll-snap-align: start;
+      }
+    }
+  }
+
   &__item {
     margin: 0;
     border-radius: space("medium");

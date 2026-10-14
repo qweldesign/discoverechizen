@@ -65,7 +65,7 @@ render_header([
       <section class="section is-wide waveArea" id="members">
         <div class="waveArea__inner">
 <?php render_title_area('隊員紹介', 'members'); ?>
-<?php render_member_list(members()); ?>
+<?php render_member_list(members(), 'is-scroll'); ?>
         </div>
       </section>
 <?php } ?>
