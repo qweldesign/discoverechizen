@@ -71,7 +71,10 @@ render_header([
 <?php } ?>
 
 <?php if (SITE_BANNERS) { ?>
-      <section class="section is-wide" id="banners" aria-label="関連する活動" data-readable>
+      <section class="section is-wide" id="banners" data-spy-section data-readable>
+        <div class="section__inner">
+<?php render_title_area('私たちの活動', 'our projects'); ?>
+        </div>
         <div class="slider" data-gallery="slider" data-gap="48" data-interval="5000">
           <ul class="slider__inner" data-gallery-main>
 <?php foreach (SITE_BANNERS as $banner) {

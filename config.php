@@ -53,6 +53,7 @@ const SITE_NAV = [
   '#about'   => '私たちについて',
   '#blog'    => 'ブログ&ニュース',
   '#members' => '隊員紹介',
+  '#banners' => '私たちの活動',
   '#contact' => 'お問い合わせ',
 ];
 

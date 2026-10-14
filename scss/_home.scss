@@ -27,6 +27,10 @@ body {
     margin-inline: calc(50% - 50vw);
   }
 
+  &__inner {
+    @include container();
+  }
+
   // 段組みの中の「もっと見る」は左寄せ
   &__more.is-start {
     margin-block-start: space("medium");
