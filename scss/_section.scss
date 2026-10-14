@@ -1,6 +1,6 @@
 /**
  * Project - Section
- * トップページの各セクション (見出しは現行サイトの titleArea に合わせる)
+ * トップページの各セクション
  */
 
 .section {
@@ -78,7 +78,17 @@
   }
 
   &__more, &__empty {
-    margin-block: space("large") 0;
+    margin-block: space("x-large") 0;
     text-align: center;
+    letter-spacing: 0.08em;
+  }
+
+  &__more a {
+    color: theme-color("primary-dark");
+    text-decoration: none;
+
+    &:hover, &:focus {
+      text-decoration: underline;
+    }
   }
 }
