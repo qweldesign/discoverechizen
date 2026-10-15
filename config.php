@@ -18,8 +18,8 @@ const SITE_URL = 'https://proto.discoverechizen.com'; // 暫定 (本番は https
 const SITE_ROOT = '/';
 // サイトの説明 (description の既定値)
 const SITE_DESCRIPTION = '福井市越前海岸は、どこにでもある、新しい海辺。福井県敦賀市杉津から、坂井市三国町安島に至る海岸線です。目の前に日本海の広がるこの地には、のんびりと流れる時間があります。越前海岸盛り上げ隊は、越前海岸の「いま」をできるだけ面白くしようと奮闘する大人たちの集まりです。';
-// OGP 画像の既定値 (サイトのルートからのパス)
-const SITE_OGP_IMAGE = 'assets/photos/main00.jpg';
+// OGP 画像の既定値 (サイトのルートからのパス. 1200 × 630. 個別に画像を指定したページ・記事はそちらを使う)
+const SITE_OGP_IMAGE = 'assets/ogp.jpg';
 // 記事一覧のサムネイルの既定値 (記事にアイキャッチがない場合)
 const SITE_THUMBNAIL_IMAGE = 'assets/photos/main00.jpg';
 // Google Fonts などの読み込み (不要なら空文字)
