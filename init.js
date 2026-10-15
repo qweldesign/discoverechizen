@@ -18,6 +18,12 @@ document.querySelectorAll('[data-gallery="slider"]').forEach((elem) => {
   new Slider(elem);
 });
 
+// 沿革の年表 (/about-us/)
+import HistoryTimeline from './js/history-timeline.js';
+document.querySelectorAll('[data-history]').forEach((elem) => {
+  new HistoryTimeline(elem);
+});
+
 // お問い合わせフォーム (トップページの入力, 確認画面)
 import ContactForm from './js/contact-form.js';
 new ContactForm();
