@@ -46,7 +46,7 @@ render_header([
           <div class="entry flexItem-4">
             <p>越前海岸盛り上げ隊は、越前海岸の「いま」をできるだけ面白くしようと奮闘する大人たちのゆるやかな集まりです。</p>
             <p>過疎化の波は大きいけれど、工夫次第でいかようにも乗りこなせるはず。</p>
-            <p class="section__more is-start"><a href="<?= e(path('about-us/')) ?>">&gt;&gt;&gt; 越前海岸盛り上げ隊とは</a></p>
+            <p class="section__more is-start"><a class="moreLink" href="<?= e(path('about-us/')) ?>"><span class="moreLink__label">越前海岸盛り上げ隊とは</span></a></p>
           </div>
         </div>
       </section>
@@ -55,7 +55,7 @@ render_header([
 <?php render_title_area(post_type('blog')['label'], post_type('blog')['en']); ?>
 <?php if ($latest) { ?>
 <?php render_post_list($latest, 'blog'); ?>
-        <p class="section__more"><a href="<?= e(type_url('blog')) ?>">&gt;&gt;&gt; <?= e(post_type('blog')['label']) ?>をもっと見る</a></p>
+        <p class="section__more"><a class="moreLink" href="<?= e(type_url('blog')) ?>"><span class="moreLink__label"><?= e(post_type('blog')['label']) ?>をもっと見る</span></a></p>
 <?php } else { ?>
         <p class="section__empty">記事はまだありません。</p>
 <?php } ?>

@@ -20,12 +20,4 @@
     letter-spacing: 0.08em;
   }
 
-  &__more a {
-    color: theme-color("primary-dark");
-    text-decoration: none;
-
-    &:hover, &:focus {
-      text-decoration: underline;
-    }
-  }
 }

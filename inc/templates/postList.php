@@ -40,7 +40,7 @@ function render_post_list(array $posts, string $type, ?bool $showDate = null): v
 <?php if (!empty($post['summary'])) { ?>
               <p class="postItem__excerpt"><?= e($post['summary']) ?></p>
 <?php } ?>
-              <a class="postItem__more" href="<?= e($url) ?>" aria-hidden="true" tabindex="-1">もっと詳しく &gt;</a>
+              <p class="postItem__more"><a class="moreLink" href="<?= e($url) ?>" aria-hidden="true" tabindex="-1"><span class="moreLink__label">もっと詳しく</span></a></p>
             </div>
           </li>
 <?php } ?>

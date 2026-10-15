@@ -15,7 +15,7 @@ render_header([
       <h1 class="main__title">送信完了</h1>
       <div class="confirm">
         <p>お問い合わせありがとうございました。<br>内容を確認のうえ、折り返しご連絡いたします。</p>
-        <p class="section__more"><a href="<?= e(path()) ?>">&gt;&gt;&gt; トップへ戻る</a></p>
+        <p class="section__more"><a class="moreLink" href="<?= e(path()) ?>"><span class="moreLink__label">トップへ戻る</span></a></p>
       </div>
     </main>
 <?php render_footer(); ?>
