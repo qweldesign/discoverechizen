@@ -2006,9 +2006,18 @@ button, input, select, textarea {
   letter-spacing: 0.06em;
 }
 .history__text {
-  margin: 0;
   line-height: 2;
   letter-spacing: 0.04em;
+}
+.history__text > * {
+  margin: 0;
+}
+.history__text > * + * {
+  margin-block-start: 1em;
+}
+.history__text a {
+  color: var(--color--primary-dark);
+  text-decoration: underline;
 }
 .history__figure {
   margin: var(--spacing--medium) 0 0;

@@ -3,7 +3,7 @@
  * 越前海岸盛り上げ隊とは (/about-us/)
  * 団体の紹介 (文章・写真はこのファイルに書く)
  * 隊員プロフィールの一覧はトップページの「隊員紹介」に移した
- * 沿革の年表のデータは about-us/history.php に書く (旧「活動実績」は沿革にまとめた)
+ * 沿革の年表のデータは content/history/ の Markdown に書く (config.php の SITE_HISTORY_DIR). 旧「活動実績」は沿革にまとめた
  * 写真は assets/about-us/ に置く
  */
 require_once dirname(__DIR__) . '/inc/templates/historyTimeline.php';
@@ -54,7 +54,7 @@ render_header([
 
         <section class="aboutUs__section" id="history">
 <?php render_title_area('沿革', 'history'); ?>
-<?php render_history_timeline(require __DIR__ . '/history.php'); ?>
+<?php render_history_timeline(history_items()); ?>
         </section>
       </div>
     </main>

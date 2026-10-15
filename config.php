@@ -109,6 +109,10 @@ const SITE_POST_TYPES = [
 // 記事の下の「この記事を書いた人」に使う. 不要なら空文字
 const SITE_MEMBERS_DIR = 'content/members';
 
+// 沿革 (/about-us/ の年表) の Markdown を置くディレクトリ. 不要なら空文字
+// 1ファイル = 年表の1組 (見出し・本文・写真). frontmatter は year, order, heading, img, alt. 本文は Markdown
+const SITE_HISTORY_DIR = 'content/history';
+
 // トップページのバナーエリア (スライダー)
 // url: リンク先 (サイトのルートからのパス, または http から始まる URL. 外部リンクは別タブで開く)
 // img: 画像 (サイトのルートからのパス, または http から始まる URL. 外部サイトは各サイトの OGP 画像)

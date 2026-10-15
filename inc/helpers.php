@@ -144,3 +144,20 @@ function member(string $slug): ?array {
   }
   return null;
 }
+
+// 沿革の年表のデータを取得する (古い年から順に, 年ごとに組をまとめる)
+// content/history/*.md の1ファイルが1組. 同じ year の組は order の順に並べる
+// 返り値: [['year' => '2021', 'entries' => [['heading', 'content', 'img', 'alt'], ...]], ...]
+function history_items(): array {
+  if (SITE_HISTORY_DIR === '') return [];
+  $entries = (new ContentLoader(dirname(__DIR__) . '/' . trim(SITE_HISTORY_DIR, '/') . '/'))->load();
+  $entries = array_filter($entries, fn($entry) => ($entry['year'] ?? '') !== '');
+  usort($entries, fn($a, $b) => [(int)$a['year'], (int)($a['order'] ?? 999)] <=> [(int)$b['year'], (int)($b['order'] ?? 999)]);
+
+  $items = [];
+  foreach ($entries as $entry) {
+    $items[$entry['year']]['year'] = $entry['year'];
+    $items[$entry['year']]['entries'][] = $entry;
+  }
+  return array_values($items);
+}

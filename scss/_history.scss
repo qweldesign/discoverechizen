@@ -195,10 +195,23 @@ $history-line-fill: theme-color("primary");
     letter-spacing: 0.06em;
   }
 
+  // 本文 (Markdown から出力した段落など)
   &__text {
-    margin: 0;
     line-height: 2;
     letter-spacing: 0.04em;
+
+    > * {
+      margin: 0;
+    }
+
+    > * + * {
+      margin-block-start: 1em;
+    }
+
+    a {
+      color: theme-color("primary-dark");
+      text-decoration: underline;
+    }
   }
 
   // 写真 (左から幕が開くように現れる)
