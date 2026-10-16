@@ -3,7 +3,7 @@
  * 教育旅行 (/study-tour/)
  * 旧サイトの「越前海岸の暮らしを見つける旅」を, 新サイトのトーンに合わせて整理したもの (プロトタイプ)
  * 文章・一覧のデータはこのファイルの上にまとめて書く (内容の確認が済んだら content/ への移行を検討)
- * 写真は content/images/study-tour/ に置く
+ * 写真・動画・パンフレット (PDF)・地図は content/images/study-tour/ に置く
  */
 require_once dirname(__DIR__) . '/inc/partials/site.php';
 
@@ -33,6 +33,15 @@ $programs = [
 
 // 体験の様子の写真 (content/images/study-tour/01.jpg ~)
 $photos = range(1, 12);
+
+// 体験の紹介動画 (content/images/study-tour/ の mp4 と, 再生前に出す poster)
+$videos = [
+  ['src' => 'activity.mp4', 'poster' => 'activity-poster.jpg', 'caption' => '越前海岸盛り上げ隊の体験メニュー「うみたん」'],
+  ['src' => 'facility.mp4', 'poster' => 'facility-poster.jpg', 'caption' => '越前海岸の農家民宿のご案内'],
+];
+
+// パンフレット (利用料金・概要)
+const STUDY_TOUR_PAMPHLET = 'content/images/study-tour/pamphlet.pdf';
 
 // 宿泊施設 (地区ごと. capacity: 収容人数)
 $stays = [
@@ -77,7 +86,7 @@ $cancelFees = [
 // よくある質問
 $faqs = [
   ['q' => '付き添いの方の料金は免除になりますか。', 'a' => '体験の付き添いの方は、料金を免除しています。'],
-  ['q' => 'これまでの受け入れの実例はありますか。', 'a' => '<a href="' . e(path('blog-and-news/r4-summary/')) . '">令和4年度の活動報告</a>に、受け入れた学校と体験の内容をまとめています。'],
+  ['q' => 'これまでの受け入れの実例はありますか。', 'a' => '<a href="' . e(path('blog-and-news/study-tour-2020/')) . '">令和2年度の活動報告</a>と<a href="' . e(path('blog-and-news/r4-summary/')) . '">令和4年度の活動報告</a>をご参照ください。'],
   ['q' => 'お昼ご飯を食べる場所はありますか。', 'a' => '屋内で食事のできるレストランのほか、天候が良ければ、周遊しながらお弁当を食べられるスポットもご案内します。'],
 ];
 
@@ -139,6 +148,14 @@ render_header([
 
         <section class="studyTour__section" id="programs">
 <?php render_title_area('体験プログラム', 'programs'); ?>
+          <div class="studyTour__videos">
+<?php foreach ($videos as $video) { ?>
+            <figure class="studyTour__video" data-readable>
+              <video src="<?= e(path('content/images/study-tour/' . $video['src'])) ?>" poster="<?= e(path('content/images/study-tour/' . $video['poster'])) ?>" controls playsinline preload="none" width="1280" height="720"></video>
+              <figcaption><?= e($video['caption']) ?></figcaption>
+            </figure>
+<?php } ?>
+          </div>
           <ul class="studyTour__gallery" aria-label="体験の様子">
 <?php foreach ($photos as $i) { ?>
             <li><img src="<?= e(path(sprintf('content/images/study-tour/%02d.jpg', $i))) ?>" alt="体験の様子" width="348" height="256" loading="lazy"></li>
@@ -210,6 +227,12 @@ render_header([
 
         <section class="studyTour__section" id="access">
 <?php render_title_area('アクセス', 'access'); ?>
+          <div class="studyTour__coast" data-readable>
+            <p class="studyTour__coastText">越前海岸は、福井県敦賀市杉津から、坂井市三国町安島に至る海岸線です。日本海の荒波によって創られた奇岩断崖が続くリアス式海岸で、国定公園にも指定されています。私たちが暮らす福井市越前海岸は、北は東尋坊、南は越前蟹で有名な越前港の間に位置しています。</p>
+            <figure class="studyTour__coastMap">
+              <img src="<?= e(path('content/images/study-tour/map-coast.svg')) ?>" alt="越前海岸の略図。北は坂井市の東尋坊、南は越前町の越前港の間に、福井市の越前海岸が位置する" width="540" height="360" loading="lazy">
+            </figure>
+          </div>
           <div class="studyTour__box" data-readable>
             <h3 class="studyTour__boxTitle">県外から福井駅まで</h3>
             <table class="studyTour__table is-access">
@@ -231,7 +254,10 @@ render_header([
             <p class="studyTour__conciergeRole">越前海岸コンシェルジュ</p>
             <p class="studyTour__conciergeName"><?= e($concierge['title'] ?? '松平裕子') ?></p>
             <p>海の暮らしも、山の暮らしもある越前海岸。地域の資源を活かしながら、地域に根ざす事業者がさまざまな営みをしています。地元の方々とのふれあいや、今も息づくどこか懐かしい暮らしを通して、学んでみませんか。</p>
-            <p class="studyTour__cta"><a class="moreLink" href="<?= e(path('')) ?>#contact"><span class="moreLink__label">コンシェルジュに問い合わせる</span></a></p>
+            <ul class="studyTour__ctas">
+              <li><a class="moreLink" href="<?= e(path('')) ?>#contact"><span class="moreLink__label">コンシェルジュに問い合わせる</span></a></li>
+              <li><a class="moreLink" href="<?= e(path(STUDY_TOUR_PAMPHLET)) ?>" target="_blank" rel="noopener"><span class="moreLink__label">パンフレットを見る（PDF）</span></a></li>
+            </ul>
           </div>
         </section>
       </div>

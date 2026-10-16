@@ -2148,6 +2148,34 @@ button, input, select, textarea {
   font-size: var(--font-size--medium);
   letter-spacing: 0.08em;
 }
+.studyTour__videos {
+  display: grid;
+  gap: var(--spacing--medium);
+  margin-block: 0 var(--spacing--large);
+}
+@media (min-width: 900px) {
+  .studyTour__videos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.studyTour__video {
+  margin: 0;
+}
+.studyTour__video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  border-radius: var(--spacing--small);
+  background-color: #000;
+}
+.studyTour__video figcaption {
+  margin-block-start: var(--spacing--x-small);
+  color: var(--color--dark);
+  font-size: var(--font-size--small);
+  text-align: center;
+  letter-spacing: 0.04em;
+}
 .studyTour__gallery {
   list-style: none;
   padding-inline-start: 0;
@@ -2390,6 +2418,31 @@ button, input, select, textarea {
   text-decoration: underline;
   text-underline-offset: 0.25em;
 }
+.studyTour__coast {
+  display: grid;
+  gap: var(--spacing--medium) var(--spacing--large);
+  align-items: center;
+  margin-block: 0 var(--spacing--large);
+}
+@media (min-width: 900px) {
+  .studyTour__coast {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+.studyTour__coastText {
+  margin: 0;
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+.studyTour__coastMap {
+  margin: 0;
+}
+.studyTour__coastMap img {
+  width: 100%;
+  max-width: 33.75rem;
+  height: auto;
+  margin-inline: auto;
+}
 .studyTour__concierge {
   display: grid;
   gap: var(--spacing--medium) var(--spacing--large);
@@ -2436,8 +2489,13 @@ button, input, select, textarea {
   font-size: var(--font-size--large);
   letter-spacing: 0.08em;
 }
-.studyTour__cta {
-  margin-block: var(--spacing--medium) 0 !important;
+.studyTour__ctas {
+  list-style: none;
+  padding-inline-start: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing--small) var(--spacing--large);
+  margin-block: var(--spacing--medium) 0;
 }
 
 /**

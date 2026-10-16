@@ -111,6 +111,38 @@ $studyTour-radius: space();
     letter-spacing: 0.08em;
   }
 
+  // 紹介動画 (PC では2本を横に並べる)
+  &__videos {
+    display: grid;
+    gap: space("medium");
+    margin-block: 0 space("large");
+
+    @media (min-width: breakpoint("md")) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__video {
+    margin: 0;
+
+    video {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      border-radius: $studyTour-radius;
+      background-color: #000;
+    }
+
+    figcaption {
+      margin-block-start: space("x-small");
+      color: theme-color("dark");
+      font-size: font-size("small");
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+  }
+
   // 体験の様子 (横に流す写真)
   &__gallery {
     @include list-unstyled();
@@ -391,6 +423,35 @@ $studyTour-radius: space();
     }
   }
 
+  // 越前海岸の位置 (文章と略図)
+  &__coast {
+    display: grid;
+    gap: space("medium") space("large");
+    align-items: center;
+    margin-block: 0 space("large");
+
+    @media (min-width: breakpoint("md")) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+
+  &__coastText {
+    margin: 0;
+    line-height: 2;
+    letter-spacing: 0.04em;
+  }
+
+  &__coastMap {
+    margin: 0;
+
+    img {
+      width: 100%;
+      max-width: 33.75rem;
+      height: auto;
+      margin-inline: auto;
+    }
+  }
+
   // コンシェルジュ (問い合わせへの導線)
   &__concierge {
     display: grid;
@@ -441,7 +502,12 @@ $studyTour-radius: space();
     letter-spacing: 0.08em;
   }
 
-  &__cta {
-    margin-block: space("medium") 0 !important;
+  // 問い合わせとパンフレットの導線 (横に並べ, 狭いときは折り返す)
+  &__ctas {
+    @include list-unstyled();
+    display: flex;
+    flex-wrap: wrap;
+    gap: space("small") space("large");
+    margin-block: space("medium") 0;
   }
 }
