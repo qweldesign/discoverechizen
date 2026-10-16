@@ -2058,6 +2058,26 @@ button, input, select, textarea {
  * 教育旅行 (/study-tour/)
  * 旧サイトのイラスト・見出し画像は使わず, 新サイトの見出し (titleArea) とカードだけで組む
  */
+.studyTour {
+  --tone: var(--color--primary);
+  --tone-text: var(--color--primary-dark);
+  --tone-tint: rgba(55, 190, 240, 0.1);
+}
+.studyTour .is-sea {
+  --tone: var(--color--primary);
+  --tone-text: var(--color--primary-dark);
+  --tone-tint: rgba(55, 190, 240, 0.1);
+}
+.studyTour .is-mountain {
+  --tone: #5aae3a;
+  --tone-text: #3d8a2a;
+  --tone-tint: rgba(90, 174, 58, 0.12);
+}
+.studyTour .is-village {
+  --tone: var(--color--secondary);
+  --tone-text: #b85410;
+  --tone-tint: rgba(240, 140, 30, 0.1);
+}
 .studyTour__intro {
   display: grid;
   gap: var(--spacing--large);
@@ -2125,7 +2145,7 @@ button, input, select, textarea {
 .studyTour__feature {
   padding: var(--spacing--medium);
   border-radius: var(--spacing--small);
-  background-color: rgba(55, 190, 240, 0.1);
+  background-color: var(--tone-tint);
   counter-increment: feature;
   line-height: 1.8;
   letter-spacing: 0.04em;
@@ -2133,7 +2153,7 @@ button, input, select, textarea {
 .studyTour__feature::before {
   content: counter(feature, decimal-leading-zero);
   display: block;
-  color: var(--color--primary);
+  color: var(--tone);
   font-style: italic;
   font-weight: 700;
   font-size: var(--font-size--x-large);
@@ -2219,15 +2239,56 @@ button, input, select, textarea {
 }
 .studyTour__program {
   padding: var(--spacing--small) var(--spacing--medium);
-  border-inline-start: 4px solid var(--color--primary);
+  border-inline-start: 4px solid var(--tone);
   border-radius: 0 var(--spacing--small) var(--spacing--small) 0;
-  background-color: rgba(55, 190, 240, 0.1);
+  background-color: var(--tone-tint);
   letter-spacing: 0.04em;
 }
 .studyTour__host {
   margin: 0;
   color: var(--color--dark);
   font-size: var(--font-size--small);
+}
+.studyTour__fields {
+  list-style: none;
+  padding-inline-start: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing--x-small) var(--spacing--small);
+  margin: 0 0 var(--spacing--medium);
+}
+.studyTour__field {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.2em 0.9em;
+  border-radius: 999px;
+  background-color: var(--tone-tint);
+  color: var(--tone-text);
+  font-weight: 700;
+  font-size: var(--font-size--small);
+  letter-spacing: 0.06em;
+}
+.studyTour__field::before {
+  content: "";
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50%;
+  background-color: var(--tone);
+}
+.studyTour__program {
+  position: relative;
+}
+.studyTour__program .studyTour__field {
+  position: absolute;
+  top: var(--spacing--small);
+  right: var(--spacing--small);
+  padding: 0 0.6em;
+  background-color: #fff;
+}
+.studyTour__program .studyTour__field::before {
+  display: none;
 }
 .studyTour__programTitle {
   font-weight: 700;
@@ -2253,8 +2314,8 @@ button, input, select, textarea {
   font-weight: 700;
   margin: 0 0 var(--spacing--small);
   padding-block-end: var(--spacing--x-small);
-  border-block-end: 2px solid var(--color--primary);
-  color: var(--color--primary-dark);
+  border-block-end: 2px solid var(--tone);
+  color: var(--tone-text);
   font-size: var(--font-size--medium);
   letter-spacing: 0.08em;
 }
@@ -2299,7 +2360,7 @@ button, input, select, textarea {
 .studyTour__step {
   position: relative;
   padding: var(--spacing--medium);
-  border: 2px solid var(--color--primary);
+  border: 2px solid var(--tone);
   border-radius: var(--spacing--small);
   counter-increment: step;
   line-height: 1.8;
@@ -2307,7 +2368,7 @@ button, input, select, textarea {
 }
 .studyTour__step::before {
   content: "STEP " counter(step);
-  color: var(--color--primary);
+  color: var(--tone-text);
   font-style: italic;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -2450,7 +2511,7 @@ button, input, select, textarea {
   margin-block: 0 var(--spacing--x-large);
   padding: var(--spacing--large) var(--spacing--medium);
   border-radius: var(--spacing--medium);
-  background-color: rgba(55, 190, 240, 0.1);
+  background-color: var(--tone-tint);
   line-height: 1.8;
   letter-spacing: 0.04em;
 }

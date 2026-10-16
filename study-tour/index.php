@@ -16,19 +16,26 @@ $features = [
   ['title' => '海・山・里を一度に', 'text' => '海と里山がすぐ隣り合う、全国でも数少ない地域。昔ながらの営みを受け継いできた人々の暮らしを、肌で体感できます。'],
 ];
 
-// 体験プログラム (host: 主催事業者)
+// 体験の分類 (海・山・里で色を分ける)
+$fields = [
+  'sea'      => '海の体験',
+  'mountain' => '山の体験',
+  'village'  => '里の体験',
+];
+
+// 体験プログラム (host: 主催事業者, field: 分類 ($fields のキー))
 $programs = [
-  ['host' => '越前海岸盛り上げ隊', 'title' => '海釣り体験', 'text' => '安全な岸壁からの釣り体験'],
-  ['host' => 'Atolla', 'title' => '磯の生き物観察', 'text' => '海岸清掃をしながら、海の生き物と自然の関係を学ぶ'],
-  ['host' => '越前海岸志野製塩所', 'title' => '塩づくり体験', 'text' => '日本海から汲み取った海水で塩をつくる'],
-  ['host' => '志野ファーム', 'title' => '家畜の餌やり体験', 'text' => 'ニワトリやヤギなどの餌やりとお世話'],
-  ['host' => 'ワタリグラススタジオ', 'title' => 'グラスづくり体験', 'text' => '海を見下ろす工房で、自分だけのグラスをつくる'],
-  ['host' => '国民宿舎鷹巣荘', 'title' => '海水浴 & BBQ', 'text' => '海を眺めながらのBBQ。温泉付き'],
-  ['host' => '岩尾醤油醸造元', 'title' => '醤油絞り体験', 'text' => '醤油を絞り、自分だけの醤油瓶をつくって持ち帰る'],
-  ['host' => 'たかすオハナ牧場', 'title' => 'ヤギ・羊の餌やり', 'text' => 'ヤギや羊とふれあう餌やり体験'],
-  ['host' => 'ファームステイ殿下', 'title' => 'ムラロゲイニング', 'text' => 'ゆるやかな競技性のある、農村を巡るアクティビティ'],
-  ['host' => 'こしのくに里山再生の会', 'title' => '林業体験', 'text' => '森の環境を学びながら、薪割りなどを体験'],
-  ['host' => 'こしのくに里山再生の会', 'title' => '川遊び体験', 'text' => '山あいの清流での川遊び'],
+  ['host' => '越前海岸盛り上げ隊', 'title' => '海釣り体験', 'field' => 'sea', 'text' => '安全な岸壁からの釣り体験'],
+  ['host' => 'Atolla', 'title' => '磯の生き物観察', 'field' => 'sea', 'text' => '海岸清掃をしながら、海の生き物と自然の関係を学ぶ'],
+  ['host' => '越前海岸志野製塩所', 'title' => '塩づくり体験', 'field' => 'sea', 'text' => '日本海から汲み取った海水で塩をつくる'],
+  ['host' => '志野ファーム', 'title' => '家畜の餌やり体験', 'field' => 'village', 'text' => 'ニワトリやヤギなどの餌やりとお世話'],
+  ['host' => 'ワタリグラススタジオ', 'title' => 'グラスづくり体験', 'field' => 'sea', 'text' => '海を見下ろす工房で、自分だけのグラスをつくる'],
+  ['host' => '国民宿舎鷹巣荘', 'title' => '海水浴 & BBQ', 'field' => 'sea', 'text' => '海を眺めながらのBBQ。温泉付き'],
+  ['host' => '岩尾醤油醸造元', 'title' => '醤油絞り体験', 'field' => 'village', 'text' => '醤油を絞り、自分だけの醤油瓶をつくって持ち帰る'],
+  ['host' => 'たかすオハナ牧場', 'title' => 'ヤギ・羊の餌やり', 'field' => 'village', 'text' => 'ヤギや羊とふれあう餌やり体験'],
+  ['host' => 'ファームステイ殿下', 'title' => 'ムラロゲイニング', 'field' => 'village', 'text' => 'ゆるやかな競技性のある、農村を巡るアクティビティ'],
+  ['host' => 'こしのくに里山再生の会', 'title' => '林業体験', 'field' => 'mountain', 'text' => '森の環境を学びながら、薪割りなどを体験'],
+  ['host' => 'こしのくに里山再生の会', 'title' => '川遊び体験', 'field' => 'mountain', 'text' => '山あいの清流での川遊び'],
 ];
 
 // 体験の様子の写真 (content/images/study-tour/01.jpg ~)
@@ -42,6 +49,9 @@ $videos = [
 
 // パンフレット (利用料金・概要)
 const STUDY_TOUR_PAMPHLET = 'content/images/study-tour/pamphlet.pdf';
+
+// 地区の色 (海沿いの地区は海の色, 里山の殿下は山の色)
+$areaTones = ['鷹巣' => 'sea', '国見' => 'sea', '越廼' => 'sea', '殿下' => 'mountain'];
 
 // 宿泊施設 (地区ごと. capacity: 収容人数)
 $stays = [
@@ -137,8 +147,8 @@ render_header([
         <section class="studyTour__section" id="features">
 <?php render_title_area('3つの特徴', 'features'); ?>
           <ol class="studyTour__features">
-<?php foreach ($features as $feature) { ?>
-            <li class="studyTour__feature" data-readable>
+<?php foreach ($features as $i => $feature) { ?>
+            <li class="studyTour__feature is-<?= ['sea', 'mountain', 'village'][$i % 3] ?>" data-readable>
               <h3 class="studyTour__featureTitle"><?= e($feature['title']) ?></h3>
               <p><?= e($feature['text']) ?></p>
             </li>
@@ -161,9 +171,15 @@ render_header([
             <li><img src="<?= e(path(sprintf('content/images/study-tour/%02d.jpg', $i))) ?>" alt="体験の様子" width="348" height="256" loading="lazy"></li>
 <?php } ?>
           </ul>
+          <ul class="studyTour__fields">
+<?php foreach ($fields as $field => $label) { ?>
+            <li class="studyTour__field is-<?= $field ?>"><?= e($label) ?></li>
+<?php } ?>
+          </ul>
           <ul class="studyTour__programs">
 <?php foreach ($programs as $program) { ?>
-            <li class="studyTour__program">
+            <li class="studyTour__program is-<?= e($program['field']) ?>">
+              <span class="studyTour__field"><?= e(mb_substr($fields[$program['field']], 0, 1)) ?></span>
               <p class="studyTour__host"><?= e($program['host']) ?></p>
               <h3 class="studyTour__programTitle"><?= e($program['title']) ?></h3>
               <p class="studyTour__programText"><?= e($program['text']) ?></p>
@@ -178,7 +194,7 @@ render_header([
           <p class="studyTour__sectionLead" data-readable>各地区は車で10分ほど。一日の終わりには、日本海に沈む夕日と、海の幸や温泉をゆっくりお楽しみください。<br>宿泊のご予約は、各施設へ直接お願いします。</p>
           <div class="studyTour__stays">
 <?php foreach ($stays as $area => $list) { ?>
-            <div class="studyTour__area" data-readable>
+            <div class="studyTour__area is-<?= $areaTones[$area] ?? 'sea' ?>" data-readable>
               <h3 class="studyTour__areaName"><?= e($area) ?>地区</h3>
               <ul class="studyTour__stayList">
 <?php foreach ($list as $stay) { ?>
@@ -197,7 +213,7 @@ render_header([
 <?php render_title_area('ご予約の流れ', 'reservation'); ?>
           <ol class="studyTour__steps">
 <?php foreach ($steps as $step) { ?>
-            <li class="studyTour__step" data-readable>
+            <li class="studyTour__step is-mountain" data-readable>
               <h3 class="studyTour__stepTitle"><?= e($step['title']) ?></h3>
               <p><?= e($step['text']) ?></p>
             </li>

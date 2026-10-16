@@ -7,7 +7,33 @@
 $studyTour-tint: rgba(map-get($theme-colors, "primary"), 0.1);
 $studyTour-radius: space();
 
+// このページだけの3番目のアクセントカラー (山の緑)
+// 海 (primary) とオレンジ (secondary) と同じくらいの明るさ・鮮やかさにそろえる
+// 文字に使うときは, 白地で読めるよう濃い方 (dark) を使う
+$studyTour-green:      #5aae3a;
+$studyTour-green-dark: #3d8a2a;
+
+// 海・山・里の色 (tone. --tone: 線や番号, --tone-text: 文字, --tone-tint: 面)
+$studyTour-tones: (
+  sea:      (theme-color("primary"),   theme-color("primary-dark"), rgba(map-get($theme-colors, "primary"), 0.1)),
+  mountain: ($studyTour-green,         $studyTour-green-dark,       rgba($studyTour-green, 0.12)),
+  village:  (theme-color("secondary"), #b85410,                     rgba(map-get($theme-colors, "secondary"), 0.1)),
+);
+
 .studyTour {
+  // 既定は海の色. is-sea / is-mountain / is-village で切り替える
+  --tone: #{theme-color("primary")};
+  --tone-text: #{theme-color("primary-dark")};
+  --tone-tint: #{$studyTour-tint};
+
+  @each $name, $tone in $studyTour-tones {
+    .is-#{$name} {
+      --tone: #{nth($tone, 1)};
+      --tone-text: #{nth($tone, 2)};
+      --tone-tint: #{nth($tone, 3)};
+    }
+  }
+
   // 導入 (文章と写真4枚)
   &__intro {
     display: grid;
@@ -84,7 +110,7 @@ $studyTour-radius: space();
   &__feature {
     padding: space("medium");
     border-radius: $studyTour-radius;
-    background-color: $studyTour-tint;
+    background-color: var(--tone-tint);
     counter-increment: feature;
     line-height: 1.8;
     letter-spacing: 0.04em;
@@ -92,7 +118,7 @@ $studyTour-radius: space();
     &::before {
       content: counter(feature, decimal-leading-zero);
       display: block;
-      color: theme-color("primary");
+      color: var(--tone);
       font-style: italic;
       font-weight: 700;
       font-size: font-size("x-large");
@@ -187,9 +213,9 @@ $studyTour-radius: space();
 
   &__program {
     padding: space("small") space("medium");
-    border-inline-start: 4px solid theme-color("primary");
+    border-inline-start: 4px solid var(--tone);
     border-radius: 0 $studyTour-radius $studyTour-radius 0;
-    background-color: $studyTour-tint;
+    background-color: var(--tone-tint);
     letter-spacing: 0.04em;
   }
 
@@ -197,6 +223,53 @@ $studyTour-radius: space();
     margin: 0;
     color: theme-color("dark");
     font-size: font-size("small");
+  }
+
+  // 体験の分類 (海・山・里) の凡例と, カードの右上の札
+  &__fields {
+    @include list-unstyled();
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: space("x-small") space("small");
+    margin: 0 0 space("medium");
+  }
+
+  &__field {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.2em 0.9em;
+    border-radius: 999px;
+    background-color: var(--tone-tint);
+    color: var(--tone-text);
+    font-weight: 700;
+    font-size: font-size("small");
+    letter-spacing: 0.06em;
+
+    &::before {
+      content: "";
+      width: 0.6em;
+      height: 0.6em;
+      border-radius: 50%;
+      background-color: var(--tone);
+    }
+  }
+
+  &__program {
+    position: relative;
+
+    .studyTour__field {
+      position: absolute;
+      top: space("small");
+      right: space("small");
+      padding: 0 0.6em;
+      background-color: #fff;
+
+      &::before {
+        display: none;
+      }
+    }
   }
 
   &__programTitle {
@@ -226,8 +299,8 @@ $studyTour-radius: space();
     font-weight: 700;
     margin: 0 0 space("small");
     padding-block-end: space("x-small");
-    border-block-end: 2px solid theme-color("primary");
-    color: theme-color("primary-dark");
+    border-block-end: 2px solid var(--tone);
+    color: var(--tone-text);
     font-size: font-size("medium");
     letter-spacing: 0.08em;
   }
@@ -277,7 +350,7 @@ $studyTour-radius: space();
   &__step {
     position: relative;
     padding: space("medium");
-    border: 2px solid theme-color("primary");
+    border: 2px solid var(--tone);
     border-radius: $studyTour-radius;
     counter-increment: step;
     line-height: 1.8;
@@ -285,7 +358,7 @@ $studyTour-radius: space();
 
     &::before {
       content: "STEP " counter(step);
-      color: theme-color("primary");
+      color: var(--tone-text);
       font-style: italic;
       font-weight: 700;
       letter-spacing: 0.08em;
@@ -460,7 +533,7 @@ $studyTour-radius: space();
     margin-block: 0 space("x-large");
     padding: space("large") space("medium");
     border-radius: space("medium");
-    background-color: $studyTour-tint;
+    background-color: var(--tone-tint);
     line-height: 1.8;
     letter-spacing: 0.04em;
 
