@@ -1,0 +1,447 @@
+/**
+ * Project - Study Tour
+ * 教育旅行 (/study-tour/)
+ * 旧サイトのイラスト・見出し画像は使わず, 新サイトの見出し (titleArea) とカードだけで組む
+ */
+
+$studyTour-tint: rgba(map-get($theme-colors, "primary"), 0.1);
+$studyTour-radius: space();
+
+.studyTour {
+  // 導入 (文章と写真4枚)
+  &__intro {
+    display: grid;
+    gap: space("large");
+    align-items: center;
+    margin-block: 0 space("x-large");
+
+    @media (min-width: breakpoint("md")) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+
+  &__lead > :last-child {
+    margin-block-end: 0;
+  }
+
+  &__catch {
+    color: theme-color("primary-dark");
+    font-weight: 700;
+    font-size: font-size("x-large");
+    line-height: 1.5;
+    letter-spacing: 0.08em;
+  }
+
+  &__mosaic {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: space("small");
+
+    img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: $studyTour-radius;
+    }
+
+    // 互い違いにずらして, 並べた写真に動きを出す
+    img:nth-child(even) {
+      transform: translateY(space("medium"));
+    }
+  }
+
+  &__section {
+    margin-block: 0 space("x-large");
+  }
+
+  &__sectionLead {
+    margin-block: 0 space("large");
+    text-align: center;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+  }
+
+  &__note {
+    margin-block: space("medium") 0;
+    color: theme-color("dark");
+    font-size: font-size("small");
+    letter-spacing: 0.04em;
+  }
+
+  // 3つの特徴 (番号付きのカード)
+  &__features {
+    @include list-unstyled();
+    display: grid;
+    gap: space("medium");
+    margin: 0;
+    counter-reset: feature;
+
+    @media (min-width: breakpoint("md")) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  &__feature {
+    padding: space("medium");
+    border-radius: $studyTour-radius;
+    background-color: $studyTour-tint;
+    counter-increment: feature;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+
+    &::before {
+      content: counter(feature, decimal-leading-zero);
+      display: block;
+      color: theme-color("primary");
+      font-style: italic;
+      font-weight: 700;
+      font-size: font-size("x-large");
+      line-height: 1.2;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__featureTitle {
+    font-weight: 700;
+    margin-block: space("x-small") space("small");
+    font-size: font-size("medium");
+    letter-spacing: 0.08em;
+  }
+
+  // 体験の様子 (横に流す写真)
+  &__gallery {
+    @include list-unstyled();
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(60vw, 15rem);
+    gap: space("small");
+    margin: 0 0 space("large");
+    padding-block-end: space("small");
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+
+    li {
+      scroll-snap-align: start;
+    }
+
+    img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: $studyTour-radius;
+    }
+  }
+
+  // 体験プログラムの一覧
+  &__programs {
+    @include list-unstyled();
+    display: grid;
+    gap: space("small");
+    margin: 0;
+
+    @media (min-width: breakpoint("sm")) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (min-width: breakpoint("lg")) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  &__program {
+    padding: space("small") space("medium");
+    border-inline-start: 4px solid theme-color("primary");
+    border-radius: 0 $studyTour-radius $studyTour-radius 0;
+    background-color: $studyTour-tint;
+    letter-spacing: 0.04em;
+  }
+
+  &__host {
+    margin: 0;
+    color: theme-color("dark");
+    font-size: font-size("small");
+  }
+
+  &__programTitle {
+    font-weight: 700;
+    margin: 0;
+    font-size: font-size("medium");
+    line-height: 1.8;
+  }
+
+  &__programText {
+    margin: 0;
+    font-size: font-size("small");
+    line-height: 1.8;
+  }
+
+  // 宿泊 (地区ごとの一覧)
+  &__stays {
+    display: grid;
+    gap: space("large") space("x-large");
+
+    @media (min-width: breakpoint("md")) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__areaName {
+    font-weight: 700;
+    margin: 0 0 space("small");
+    padding-block-end: space("x-small");
+    border-block-end: 2px solid theme-color("primary");
+    color: theme-color("primary-dark");
+    font-size: font-size("medium");
+    letter-spacing: 0.08em;
+  }
+
+  &__stayList {
+    @include list-unstyled();
+    margin: 0;
+
+    li {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0 space("small");
+      padding-block: space("x-small");
+      border-block-end: 1px solid theme-color("lighter");
+      line-height: 1.8;
+    }
+  }
+
+  &__stayName {
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  &__stayMeta {
+    color: theme-color("dark");
+    font-size: font-size("small");
+
+    a {
+      color: inherit;
+    }
+  }
+
+  // ご予約の流れ (3ステップ)
+  &__steps {
+    @include list-unstyled();
+    display: grid;
+    gap: space("medium");
+    margin: 0 0 space("large");
+    counter-reset: step;
+
+    @media (min-width: breakpoint("md")) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  &__step {
+    position: relative;
+    padding: space("medium");
+    border: 2px solid theme-color("primary");
+    border-radius: $studyTour-radius;
+    counter-increment: step;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+
+    &::before {
+      content: "STEP " counter(step);
+      color: theme-color("primary");
+      font-style: italic;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__stepTitle {
+    font-weight: 700;
+    margin-block: 0 space("x-small");
+    font-size: font-size("medium");
+  }
+
+  // 2段組み (キャンセル料とよくある質問)
+  &__columns {
+    display: grid;
+    gap: space("medium");
+
+    @media (min-width: breakpoint("lg")) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__box {
+    padding: space("medium");
+    border-radius: $studyTour-radius;
+    background-color: $studyTour-tint;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+
+    > p {
+      margin-block: 0 space("small");
+    }
+
+    > :last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  &__boxTitle {
+    font-weight: 700;
+    margin-block: 0 space("small");
+    color: theme-color("primary-dark");
+    font-size: font-size("medium");
+    letter-spacing: 0.08em;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+
+    th, td {
+      padding: space("x-small") space("small");
+      border-block-end: 1px solid theme-color("lighter");
+      text-align: left;
+    }
+
+    th {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    // アクセスは所要時間を右にそろえる
+    &.is-access td {
+      &:last-child {
+        text-align: right;
+      }
+    }
+
+    // スマホでは, 出発地を上の段に出し, 交通手段と所要時間を下の段に並べる
+    &.is-access tr {
+      @media (max-width: breakpoint("sm") - 0.1px) {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        border-block-end: 1px solid theme-color("lighter");
+
+        th {
+          grid-column: 1 / -1;
+          padding-block-end: 0;
+          border: 0;
+        }
+
+        td {
+          padding-block-start: 0;
+          border: 0;
+        }
+      }
+    }
+  }
+
+  &__faq {
+    margin: 0;
+
+    dt {
+      position: relative;
+      padding-inline-start: 1.75em;
+      font-weight: 700;
+
+      &::before {
+        content: "Q";
+        position: absolute;
+        left: 0;
+        color: theme-color("primary");
+        font-style: italic;
+      }
+    }
+
+    dd {
+      position: relative;
+      margin: 0 0 space("small");
+      padding-inline-start: 1.75em;
+
+      &::before {
+        content: "A";
+        position: absolute;
+        left: 0;
+        color: theme-color("secondary");
+        font-style: italic;
+        font-weight: 700;
+      }
+
+      &:last-child {
+        margin-block-end: 0;
+      }
+    }
+
+    a {
+      color: theme-color("primary-dark");
+      text-decoration: underline;
+      text-underline-offset: 0.25em;
+    }
+  }
+
+  // コンシェルジュ (問い合わせへの導線)
+  &__concierge {
+    display: grid;
+    gap: space("medium") space("large");
+    align-items: center;
+    margin-block: 0 space("x-large");
+    padding: space("large") space("medium");
+    border-radius: space("medium");
+    background-color: $studyTour-tint;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+
+    @media (min-width: breakpoint("md")) {
+      grid-template-columns: 12rem minmax(0, 1fr);
+      padding: space("large");
+    }
+  }
+
+  &__conciergeFigure {
+    width: 9rem;
+    margin: 0 auto;
+
+    @media (min-width: breakpoint("md")) {
+      width: 100%;
+    }
+
+    img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &__conciergeBody > p {
+    margin-block: 0 space("small");
+  }
+
+  &__conciergeRole {
+    color: theme-color("dark");
+    font-size: font-size("small");
+  }
+
+  &__conciergeName {
+    font-weight: 700;
+    font-size: font-size("large");
+    letter-spacing: 0.08em;
+  }
+
+  &__cta {
+    margin-block: space("medium") 0 !important;
+  }
+}
