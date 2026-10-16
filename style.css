@@ -1709,59 +1709,164 @@ button, input, select, textarea {
 }
 
 /**
+ * Component - Backdrop
+ * ページの上部に敷く, 薄くした写真の背景
+ * 写真は下に向かって白く溶け, 続きのコンテンツへ目線を送る (スクロールを促す)
+ * 使い方: .main の最初の子に <div class="backdrop" style="--backdrop-image: url(...)" aria-hidden="true"></div>
+ */
+.main:has(> .backdrop) {
+  position: relative;
+  isolation: isolate;
+}
+
+.backdrop {
+  position: absolute;
+  z-index: -1;
+  top: calc(-1 * var(--spacing--x-large) - 4.5rem);
+  left: 50%;
+  width: 100vw;
+  height: min(120vh, 64rem);
+  transform: translateX(-50%);
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 35%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 35%, transparent 100%);
+}
+.backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--backdrop-image);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.25;
+  animation: backdrop-zoom 30s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .backdrop::before {
+    animation: none;
+  }
+}
+
+@keyframes backdrop-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+/**
  * Project - About Us
  * 越前海岸盛り上げ隊とは (/about-us/) と, 隊員プロフィールの一覧 (.memberList)
- * 段組みの幅・並び順は Utility の flexItem で指定する
+ * 導入は「説明 (リードと2段組み)」と「メッセージ (波の帯)」の2つ
  */
-.aboutUs__row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--spacing--medium) 0;
-  margin-block: 0 var(--spacing--x-large);
+.aboutUs__intro {
+  max-width: 54rem;
+  margin: 0 auto var(--spacing--large);
 }
-.aboutUs__section {
-  margin-block: 0 var(--spacing--x-large);
+.aboutUs__lead {
+  margin: 0 0 var(--spacing--medium);
+  color: var(--color--primary-dark);
+  font-weight: 700;
+  font-size: var(--font-size--normal);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+  word-break: auto-phrase;
+  text-wrap: balance;
+  text-shadow: 0 0 0.5em #fff, 0 0 0.15em #fff;
 }
-.aboutUs__section .aboutUs__row {
-  margin-block-end: var(--spacing--large);
+@media (min-width: 900px) {
+  .aboutUs__lead {
+    width: 27rem;
+    margin-inline: auto;
+    margin-block-end: var(--spacing--large);
+    font-size: var(--font-size--medium);
+    text-align: center;
+  }
 }
-.aboutUs__text > :last-child {
+@media (min-width: 900px) {
+  .aboutUs__columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing--large);
+  }
+}
+.aboutUs__columns p {
+  margin: 0;
+  font-size: var(--font-size--small);
+}
+.aboutUs__columns p + p {
+  margin-block-start: 1em;
+}
+@media (min-width: 900px) {
+  .aboutUs__columns p + p {
+    margin-block-start: 0;
+  }
+}
+.aboutUs__message {
+  position: relative;
+  width: 100vw;
+  margin: 3rem calc(50% - 50vw) calc(3rem + var(--spacing--medium));
+  padding-block: var(--spacing--small);
+  background-color: #eaf7fd;
+}
+.aboutUs__message::before, .aboutUs__message::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath fill='%23eaf7fd' d='M0 20 Q150 0 300 20 T600 20 T900 20 T1200 20 V40 H0Z'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 1200px 100%;
+  background-position: 0 bottom;
+  pointer-events: none;
+}
+.aboutUs__message::before {
+  bottom: 100%;
+}
+.aboutUs__message::after {
+  top: 100%;
+  transform: scaleY(-1);
+  background-position: -400px bottom;
+}
+.aboutUs__messageInner {
+  width: min(100%, var(--container-width--lg));
+  margin-inline: auto;
+  padding-inline: var(--container-pad--lg);
+  text-align: center;
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+.aboutUs__messageInner p {
+  margin: 0 0 var(--spacing--small);
+  word-break: auto-phrase;
+  text-wrap: balance;
+}
+.aboutUs__messageInner > :last-child {
   margin-block-end: 0;
 }
-.aboutUs__text h3:first-child {
-  margin-block-start: 0;
+.aboutUs__phrase {
+  display: inline-block;
 }
 .aboutUs__voice {
   color: var(--color--primary-dark);
   font-weight: 700;
   font-size: var(--font-size--large);
-  letter-spacing: 0.1em;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
 }
-.aboutUs__figure {
-  margin: 0;
+@media (min-width: 900px) {
+  .aboutUs__voice {
+    font-size: var(--font-size--x-large);
+  }
 }
-.aboutUs__figure img {
-  border-radius: 0.5rem;
+.aboutUs__messageMore {
+  margin-block-start: var(--spacing--medium) !important;
 }
-.aboutUs__figure figcaption {
-  margin-block-start: var(--spacing--x-small);
-  color: var(--color--dark);
-  font-size: var(--font-size--small);
-  text-align: center;
-  letter-spacing: 0.06em;
-}
-.aboutUs__figure.is-map img {
-  width: auto;
-  max-width: 100%;
-  max-height: 32rem;
-  margin-inline: auto;
-}
-.aboutUs__founders {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--spacing--small);
+.aboutUs__section {
+  margin-block: 0 var(--spacing--x-large);
 }
 
 .memberList {
