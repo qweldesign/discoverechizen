@@ -124,7 +124,7 @@ render_header([
   'title'       => STUDY_TOUR_TITLE,
   'description' => '越前海岸盛り上げ隊の教育旅行「越前海岸の暮らしを見つける旅」。地域に根ざして働く人たちと、海・山・里の暮らしに触れる体験プログラムをご案内します。',
   'path'        => 'study-tour/',
-  'image'       => 'content/images/study-tour/12.jpg',
+  'image'       => 'assets/banners/study-tour.jpg',
 ]);
 ?>
     <main id="main" class="main">
