@@ -5,7 +5,7 @@
  * 2. 私たちについて (/about-us/ へのリンク)
  * 3. ブログ&ニュースの最新記事
  * 4. 隊員紹介 (content/members/ から自動で並べる. 波のアニメーションの背景)
- * 5. バナーエリア (Slider. 中身は config.php の SITE_BANNERS)
+ * 5. バナーエリア (Slider. 中身は content/banners/ の Markdown. config.php の SITE_BANNERS_DIR)
  * 6. お問い合わせ (qwel-tools-contact-form. 確認・完了画面は contact/, 送信は api/)
  * 一覧・個別記事は投稿タイプのディレクトリ (blog-and-news/, page/) が表示する
  */
@@ -70,19 +70,20 @@ render_header([
       </section>
 <?php } ?>
 
-<?php if (SITE_BANNERS) { ?>
+<?php $banners = banners(); ?>
+<?php if ($banners) { ?>
       <section class="section is-wide" id="banners" data-spy-section data-readable>
         <div class="section__inner">
 <?php render_title_area('私たちの活動', 'our projects'); ?>
         </div>
         <div class="slider" data-gallery="slider" data-gap="48" data-interval="5000">
           <ul class="slider__inner" data-gallery-main>
-<?php foreach (SITE_BANNERS as $banner) {
+<?php foreach ($banners as $banner) {
   $isExternal = (bool)preg_match('#^https?://#', $banner['url']);
   $target = $isExternal ? ' target="_blank" rel="noopener"' : '';
 ?>
             <li class="slider__item" data-gallery-item>
-              <a href="<?= e(path($banner['url'])) ?>"<?= $target ?>><img src="<?= e(path($banner['img'])) ?>" alt="" width="1200" height="750" loading="lazy"></a>
+              <a href="<?= e(path($banner['url'])) ?>"<?= $target ?>><img src="<?= e(path($banner['img'])) ?>" alt="<?= e($banner['title'] ?? '') ?>" width="1200" height="630" loading="lazy"></a>
             </li>
 <?php } ?>
           </ul>

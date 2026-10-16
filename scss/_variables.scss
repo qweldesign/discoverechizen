@@ -23,5 +23,5 @@ $drawer-site-brand-width:  10.5rem;
 // メインギャラリーの写真は index.php で指定するので, Fader の既定の画像クラスは出力しない
 $gallery-image-count: 0;
 
-// スライダー
-$slider-aspect-ratio: 2;
+// スライダー (バナーの画像は 1200 × 630. OGP 画像と同じ比率にそろえる)
+$slider-aspect-ratio: 1.905;

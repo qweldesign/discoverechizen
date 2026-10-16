@@ -1204,7 +1204,7 @@ button, input, select, textarea {
 .slider {
   position: relative;
   width: 100%;
-  height: calc(83.33vmin / 2);
+  height: calc(83.33vmin / 1.905);
   margin-block-start: 3rem;
   overflow: hidden;
 }
@@ -1235,7 +1235,7 @@ button, input, select, textarea {
 }
 .slider__item img {
   width: 83.33vmin;
-  aspect-ratio: 2;
+  aspect-ratio: 1.905;
   -o-object-fit: cover;
      object-fit: cover;
   margin: 0;

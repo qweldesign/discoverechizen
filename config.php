@@ -113,15 +113,13 @@ const SITE_MEMBERS_DIR = 'content/members';
 // 1ファイル = 年表の1組 (見出し・本文・写真). frontmatter は year, order, heading, img, alt. 本文は Markdown
 const SITE_HISTORY_DIR = 'content/history';
 
-// トップページのバナーエリア (スライダー)
-// url: リンク先 (サイトのルートからのパス, または http から始まる URL. 外部リンクは別タブで開く)
-// img: 画像 (サイトのルートからのパス, または http から始まる URL. 外部サイトは各サイトの OGP 画像)
-const SITE_BANNERS = [
-  ['title' => '越前海岸盛り上げ隊とは', 'url' => 'about-us/', 'img' => 'assets/banners/members.jpg'],
-  ['title' => '海辺の古民家はりいしゃ', 'url' => 'https://hariisha.jp/', 'img' => 'assets/banners/hariisha-jp.jpg'],
-  ['title' => '国見 海・人・暮らし相談室', 'url' => 'https://kunimi.life/', 'img' => 'assets/banners/kunimi-life.jpg'],
-  ['title' => 'つるつるいっぱい浜ラジオ', 'url' => 'blog-and-news/podcast-start/', 'img' => 'assets/banners/podcast.jpg'],
-];
+// トップページのバナーエリア「私たちの活動」(スライダー) の Markdown を置くディレクトリ. 不要なら空文字
+// 1ファイル = バナー1枚. frontmatter は title, url, img, order (本文は使わない)
+//   title: バナーの名前 (画像の alt に使う)
+//   url: リンク先 (サイトのルートからのパス, または http から始まる URL. 外部リンクは別タブで開く)
+//   img: 画像 (1200 × 630. content/images/banners/ に置く. 外部サイトは各サイトの OGP 画像)
+//   order: 並び順 (小さい順. 書かなければ後ろに並べる)
+const SITE_BANNERS_DIR = 'content/banners';
 
 // 投稿タイプ以外のページ (サイトのルートからのパス. サイトマップに載せる)
 const SITE_PAGES = [
