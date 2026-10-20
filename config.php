@@ -111,6 +111,10 @@ const SITE_POST_TYPES = [
 // 記事の下の「この記事を書いた人」に使う. 不要なら空文字
 const SITE_MEMBERS_DIR = 'content/members';
 
+// 沿革 (/about-us/ の年表) の Markdown を置くディレクトリ. 不要なら空文字
+// 1ファイル = 年表の1組 (見出し・本文・写真). frontmatter は year, order, heading, img, alt. 本文は Markdown
+const SITE_HISTORY_DIR = 'content/history';
+
 // トップページのバナーエリア「私たちの活動」(スライダー) の Markdown を置くディレクトリ. 不要なら空文字
 // 1ファイル = バナー1枚. frontmatter は title, url, img, order (本文は使わない)
 //   title: バナーの名前 (画像の alt に使う)
@@ -121,6 +125,7 @@ const SITE_BANNERS_DIR = 'content/banners';
 
 // 投稿タイプ以外のページ (サイトのルートからのパス. サイトマップに載せる)
 const SITE_PAGES = [
+  'about-us/',
 ];
 
 // URL の形式 (false: ?slug=xxx, ?page=2 / true: xxx/, page/2/ ※ .htaccess のリライトが必要)

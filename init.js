@@ -18,6 +18,12 @@ document.querySelectorAll('[data-gallery="slider"]').forEach((elem) => {
   new Slider(elem);
 });
 
+// HistoryTimeline
+import HistoryTimeline from './js/history-timeline.js';
+document.querySelectorAll('[data-history]').forEach((elem) => {
+  new HistoryTimeline(elem);
+});
+
 // ContactForm
 import ContactForm from './js/contact-form.js';
 new ContactForm();
