@@ -1677,9 +1677,166 @@ button, input, select, textarea {
 }
 
 /**
- * Project - About Us
- * 隊員プロフィールの一覧 (.memberList)
+ * Component - Backdrop
+ * ページの上部に敷く, 薄くした写真の背景
+ * 写真は下に向かって白く溶け, 続きのコンテンツへ目線を送る (スクロールを促す)
+ * 使い方: .main の最初の子に <div class="backdrop" style="--backdrop-image: url(...)" aria-hidden="true"></div>
  */
+.main:has(> .backdrop) {
+  position: relative;
+  isolation: isolate;
+}
+
+.backdrop {
+  position: absolute;
+  z-index: -1;
+  top: calc(-1 * var(--spacing--x-large) - 4.5rem);
+  left: 50%;
+  width: 100vw;
+  height: min(120vh, 64rem);
+  transform: translateX(-50%);
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 35%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 35%, transparent 100%);
+}
+.backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--backdrop-image);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.25;
+  animation: backdrop-zoom 30s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .backdrop::before {
+    animation: none;
+  }
+}
+
+@keyframes backdrop-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+/**
+ * Project - About Us
+ * 越前海岸盛り上げ隊とは (/about-us/) と, 隊員プロフィールの一覧 (.memberList)
+ * 導入は「説明 (リードと2段組み)」と「メッセージ (波の帯)」の2つ
+ */
+.aboutUs__intro {
+  max-width: 54rem;
+  margin: 0 auto var(--spacing--large);
+}
+.aboutUs__lead {
+  margin: 0 0 var(--spacing--medium);
+  color: var(--color--primary-dark);
+  font-weight: 700;
+  font-size: var(--font-size--normal);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+  word-break: auto-phrase;
+  text-wrap: balance;
+  text-shadow: 0 0 0.5em #fff, 0 0 0.15em #fff;
+}
+@media (min-width: 900px) {
+  .aboutUs__lead {
+    width: 27rem;
+    margin-inline: auto;
+    margin-block-end: var(--spacing--large);
+    font-size: var(--font-size--medium);
+    text-align: center;
+  }
+}
+@media (min-width: 900px) {
+  .aboutUs__columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing--large);
+  }
+}
+.aboutUs__columns p {
+  margin: 0;
+  font-size: var(--font-size--small);
+}
+.aboutUs__columns p + p {
+  margin-block-start: 1em;
+}
+@media (min-width: 900px) {
+  .aboutUs__columns p + p {
+    margin-block-start: 0;
+  }
+}
+.aboutUs__message {
+  position: relative;
+  width: 100vw;
+  margin: 3rem calc(50% - 50vw) calc(3rem + var(--spacing--medium));
+  padding-block: var(--spacing--small);
+  background-color: #eaf7fd;
+}
+.aboutUs__message::before, .aboutUs__message::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath fill='%23eaf7fd' d='M0 20 Q150 0 300 20 T600 20 T900 20 T1200 20 V40 H0Z'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 1200px 100%;
+  background-position: 0 bottom;
+  pointer-events: none;
+}
+.aboutUs__message::before {
+  bottom: 100%;
+}
+.aboutUs__message::after {
+  top: 100%;
+  transform: scaleY(-1);
+  background-position: -400px bottom;
+}
+.aboutUs__messageInner {
+  width: min(100%, var(--container-width--lg));
+  margin-inline: auto;
+  padding-inline: var(--container-pad--lg);
+  text-align: center;
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+.aboutUs__messageInner p {
+  margin: 0 0 var(--spacing--small);
+  word-break: auto-phrase;
+  text-wrap: balance;
+}
+.aboutUs__messageInner > :last-child {
+  margin-block-end: 0;
+}
+.aboutUs__phrase {
+  display: inline-block;
+}
+.aboutUs__voice {
+  color: var(--color--primary-dark);
+  font-weight: 700;
+  font-size: var(--font-size--large);
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+}
+@media (min-width: 900px) {
+  .aboutUs__voice {
+    font-size: var(--font-size--x-large);
+  }
+}
+.aboutUs__messageMore {
+  margin-block-start: var(--spacing--medium) !important;
+}
+.aboutUs__section {
+  margin-block: 0 var(--spacing--x-large);
+}
+
 .memberList {
   list-style: none;
   padding-inline-start: 0;
@@ -1763,6 +1920,212 @@ button, input, select, textarea {
   text-underline-offset: 0.25em;
 }
 
+/**
+ * Project - History
+ * 沿革の年表 (/about-us/). 動きは js/history-timeline.js が書き込む CSS 変数から決める
+ *
+ * --history-progress: 縦の線の満ち具合 (0〜1)
+ * --item-progress: 各年の写真が開く・文章が出る進み具合 (0〜1)
+ * どちらも JS が動いていなければ 1 (最初から全部表示)
+ */
+.history {
+  --history-progress: 1;
+  position: relative;
+}
+@media (min-width: 900px) {
+  .history {
+    display: grid;
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: var(--spacing--large);
+  }
+}
+.history__sea {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+.history__sea.is-visible {
+  opacity: 1;
+}
+.history:not(.is-animated) .history__sea {
+  display: none;
+}
+.history__current {
+  display: none;
+}
+@media (min-width: 900px) {
+  .history__current {
+    position: sticky;
+    top: calc(var(--scroll-offset, 0px) + var(--spacing--large));
+    align-self: start;
+    display: block;
+    margin: 0;
+    color: var(--color--primary);
+    text-shadow: 0 0 0.5em #fff, 0 0 0.15em #fff;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 4.5rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+}
+.history__current span {
+  display: inline-block;
+}
+.history__current span.is-changed {
+  animation: history-year-change 0.5s ease both;
+}
+.history:not(.is-animated) .history__current {
+  visibility: hidden;
+}
+.history__list {
+  list-style: none;
+  padding-inline-start: 0;
+  position: relative;
+  margin: 0;
+  padding-inline-start: 2.75rem;
+}
+.history__list::before, .history__list::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0.75rem;
+  width: 2px;
+  border-radius: 1px;
+}
+.history__list::before {
+  bottom: 0;
+  background-color: rgba(55, 190, 240, 0.2);
+}
+.history__list::after {
+  height: calc(var(--history-progress) * 100%);
+  background: linear-gradient(var(--color--primary-dark), var(--color--primary));
+}
+.history__item {
+  --item-progress: 1;
+  position: relative;
+  margin: 0;
+  padding-block-end: var(--spacing--x-large);
+}
+.history__item:last-child {
+  padding-block-end: 0;
+}
+.history__item::before {
+  content: "";
+  position: absolute;
+  top: 0.55rem;
+  left: calc(0.75rem - 2.75rem - 1rem / 2 + 1px);
+  z-index: 1;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--color--primary);
+  border-radius: 50%;
+  background-color: #fff;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.history__item.is-passed::before, .history:not(.is-animated) .history__item::before {
+  background-color: var(--color--primary);
+}
+.history__item.is-passed::before {
+  transform: scale(1.2);
+}
+.history__entry {
+  --item-progress: 1;
+}
+.history__entry + .history__entry {
+  margin-block-start: var(--spacing--large);
+}
+@media (min-width: 900px) {
+  .history__entry.has-figure {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: var(--spacing--large);
+    align-items: center;
+  }
+}
+@media (min-width: 900px) {
+  .history__entry.is-reverse .history__figure {
+    order: -1;
+  }
+}
+.history__body {
+  opacity: clamp(0, var(--item-progress) * 1.6 - 0.3, 1);
+  transform: translateY(calc((1 - var(--item-progress)) * 1.5rem));
+}
+.history__year, .history__title {
+  text-shadow: 0 0 0.5em #fff, 0 0 0.15em #fff;
+}
+.history__year {
+  opacity: clamp(0, var(--item-progress) * 1.6 - 0.3, 1);
+  transform: translateY(calc((1 - var(--item-progress)) * 1.5rem));
+  margin: 0 0 var(--spacing--x-small);
+  color: var(--color--primary-dark);
+  font-style: italic;
+  font-weight: 700;
+  font-size: var(--font-size--x-large);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+}
+.history__title {
+  margin-block: 0 var(--spacing--small);
+  font-weight: 700;
+  font-size: var(--font-size--large);
+  line-height: 1.8;
+  letter-spacing: 0.06em;
+}
+.history__text {
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+.history__text > * {
+  margin: 0;
+}
+.history__text > * + * {
+  margin-block-start: 1em;
+}
+.history__text a {
+  color: var(--color--primary-dark);
+  text-decoration: underline;
+}
+.history__figure {
+  margin: var(--spacing--medium) 0 0;
+}
+@media (min-width: 900px) {
+  .history__figure {
+    margin-block-start: 0;
+  }
+}
+.history__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/10;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 0.5rem;
+  clip-path: inset(0 calc((1 - var(--item-progress)) * 100%) 0 0 round 0.5rem);
+}
+
+@keyframes history-year-change {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .history__current span.is-changed {
+    animation: none;
+  }
+}
 /**
  * Project - Entry
  * 記事の本文 (Markdown から変換した HTML)
