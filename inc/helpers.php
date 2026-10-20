@@ -111,6 +111,21 @@ function content_engine(string $type, array $options = []): ContentEngine {
   ]);
 }
 
+// 記事の author ("slug-a, slug-b" のようにカンマ区切り) から, 隊員のプロフィールを取得する
+// プロフィールのファイルがない slug は飛ばす
+function post_authors(string $author): array {
+  if (SITE_MEMBERS_DIR === '') return [];
+  $slugs = array_filter(array_map('trim', explode(',', trim($author, '" '))));
+  if (!$slugs) return [];
+
+  $members = [];
+  foreach ($slugs as $slug) {
+    $member = member($slug);
+    if ($member) $members[] = $member;
+  }
+  return $members;
+}
+
 // トップページのバナーを全部取得する (order の順. order がないバナーは後ろに並べる)
 function banners(): array {
   if (SITE_BANNERS_DIR === '') return [];

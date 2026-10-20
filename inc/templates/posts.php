@@ -14,6 +14,7 @@
  */
 
 require_once __DIR__ . '/postList.php';
+require_once __DIR__ . '/postAuthor.php';
 
 /**
  * $type: 投稿タイプ (config.php の SITE_POST_TYPES のキー)
@@ -72,6 +73,7 @@ function render_posts(string $type, array $options = []): void {
           <div class="entry">
 <?= $cms->get_content() ?>
           </div>
+<?php render_post_author(post_authors($cms->get_meta('author'))); ?>
 <?php if ($options['adjacent'] ?? true) { ?>
 <?php $adjacent = $cms->get_adjacent(); ?>
           <nav class="postNav" aria-label="前後の記事">
