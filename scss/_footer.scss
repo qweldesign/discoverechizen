@@ -1,40 +1,30 @@
 /**
  * Layout - Footer
+ * 現行サイトに合わせ, ロゴと著作権表示だけのシンプルなフッター
  */
 
 .footer {
-  padding: space("x-large") 0;
-  @include background("primary");
+  position: relative;
+  @include row(center, center);
+  gap: space("medium");
+  padding: space("x-large") space();
+  @include background("primary-dark");
   text-align: center;
 
-  &__inner {
-    @include row(center);
-    gap: space("large");
-    @include container();
-  }
+  &__logo {
+    width: 15rem;
+    margin: 0 0 space("medium");
 
-  &__item {
-    display: inline-flex;
-    align-items: center;
-    @include small-text();
-
-    .icon {
-      margin-inline-end: space("x-small");
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: invert(1) grayscale(1) brightness(4); // 白抜き
     }
-  }
-
-  // サイト内のリンク (config.php の SITE_FOOTER_LINKS)
-  &__nav ul {
-    @include list-unstyled();
-    @include row(center);
-    gap: space("x-small") space("medium");
-    margin: 0 auto space("medium");
-    @include small-text();
   }
 
   &__copyright {
     display: block;
-    margin-block-start: space("medium");
   }
 
   small {

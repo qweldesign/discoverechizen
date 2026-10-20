@@ -50,6 +50,7 @@ $slider-nav-active-color:    $link-hover-color !default;
       aspect-ratio: $slider-aspect-ratio;
       object-fit: cover;
       margin: 0;
+      border-radius: space("x-small");
 
       @media (min-width: $slider-break-point) {
         width: auto;

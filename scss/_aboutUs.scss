@@ -1,0 +1,96 @@
+/**
+ * Project - About Us
+ * 隊員プロフィールの一覧 (.memberList)
+ */
+
+// 隊員プロフィールの一覧
+.memberList {
+  @include list-unstyled();
+  display: grid;
+  gap: space("large") space("medium");
+  margin: 0;
+
+  @media (min-width: breakpoint("sm")) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: breakpoint("lg")) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  // トップページ: タブレット以下ではカードを横に流す (PC ではグリッド)
+  &.is-scroll {
+    @media (max-width: breakpoint("lg") - 0.1px) {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: min(80vw, 20rem);
+      gap: space("medium");
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      // 画面端まで流しつつ, 1枚目はコンテナの左端にそろえる
+      scroll-padding-inline: #{container-pad("lg")};
+      padding: space("x-small") #{container-pad("lg")} space("medium");
+      margin-inline: calc(-1 * #{container-pad("lg")});
+      scrollbar-width: thin;
+
+      .memberList__item {
+        scroll-snap-align: start;
+      }
+    }
+  }
+
+  &__item {
+    margin: 0;
+    border-radius: space("medium");
+    scroll-margin-block-start: space("large");
+    background-color: rgba(map-get($theme-colors, "primary"), 0.1);
+    box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+
+  &__image {
+    margin-block-end: space();
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  &__role {
+    margin: space("x-small") 0 0;
+    padding-inline: space("medium");
+    color: theme-color("dark");
+    font-size: font-size("small");
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+  }
+
+  &__name {
+    margin: 0;
+    padding-inline: space("medium");
+    font-weight: 700;
+    font-size: font-size("medium");
+    line-height: 1.8;
+    letter-spacing: 0.08em;
+  }
+
+  &__text {
+    padding: space("small") space("medium") space("medium");
+    font-size: font-size("small");
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+
+    p {
+      margin: 0;
+    }
+
+    p + p {
+      margin-block-start: 0.75em;
+    }
+
+    a {
+      color: theme-color("primary-dark");
+      text-decoration: underline;
+      text-underline-offset: 0.25em;
+    }
+  }
+}

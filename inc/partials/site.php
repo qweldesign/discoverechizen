@@ -61,10 +61,22 @@ function render_header(array $page = []): void {
 <?php } ?>
     <link rel="stylesheet" href="<?= path('style.css') ?>">
     <link rel="icon" href="<?= path('favicon.ico') ?>">
+<?php if (SITE_GA_ID) { ?>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<?= e(SITE_GA_ID) ?>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '<?= e(SITE_GA_ID) ?>');
+    </script>
+<?php } ?>
   </head>
   <body>
-    <header class="header">
-      <p id="logo" class="header__logo">
+    <div data-scroll-sentinel aria-hidden="true"></div>
+    <header class="header is-active" data-active-header>
+      <p id="logo" class="header__logo" data-site-brand>
         <a href="<?= e(SITE_LOGO_LINK ?: path()) ?>">
 <?php if (SITE_LOGO) { ?>
           <img src="<?= path(SITE_LOGO) ?>" alt="<?= e(SITE_NAME) ?>">
@@ -75,9 +87,12 @@ function render_header(array $page = []): void {
       </p>
 <?php if (SITE_NAV) { ?>
       <nav class="header__nav" aria-label="グローバルナビゲーション">
-        <ul>
-<?php foreach (SITE_NAV as $navPath => $label) { ?>
-          <li><a href="<?= e(path($navPath)) ?>"><?= e($label) ?></a></li>
+        <ul data-primary-menu>
+<?php foreach (SITE_NAV as $navPath => $label) {
+  // トップページのセクションへのリンクは, トップ以外では /#xxx にする (ScrollSpy は #xxx で照合する)
+  $href = str_starts_with($navPath, '#') ? (($page['path'] ?? null) === '' ? $navPath : path() . $navPath) : path($navPath);
+?>
+          <li data-spy-nav><a href="<?= e($href) ?>"><?= e($label) ?></a></li>
 <?php } ?>
         </ul>
       </nav>
@@ -90,6 +105,9 @@ function render_header(array $page = []): void {
 function render_footer(): void {
   ?>
     <footer id="footer" class="footer">
+<?php if (SITE_FOOTER_LOGO) { ?>
+      <p class="footer__logo"><img src="<?= path(SITE_FOOTER_LOGO) ?>" alt="<?= e(SITE_NAME) ?>" width="240" height="80"></p>
+<?php } ?>
 <?php if (SITE_FOOTER_LINKS) { ?>
       <nav class="footer__nav" aria-label="サイト内のページ">
         <ul>
@@ -119,5 +137,26 @@ function render_footer(): void {
     <script src="<?= path('init.js') ?>" type="module"></script>
   </body>
 </html>
+<?php
+}
+
+/**
+ * 見出し (titleArea コンポーネント)
+ * $label: 見出し (日本語)
+ * $en: 上に重ねる英語 (空文字なら出さない)
+ * $tag: 見出しの要素 (トップのセクションは h2, 一覧ページは h1)
+ * $class: 外側に足すクラス (配置する側の要素. 例: main__titleArea)
+ */
+function render_title_area(string $label, string $en = '', string $tag = 'h2', string $class = ''): void {
+  $classes = trim('titleArea ' . $class);
+  ?>
+        <div class="<?= e($classes) ?>" data-readable>
+          <<?= $tag ?> class="titleArea__title">
+<?php if ($en !== '') { ?>
+            <span class="titleArea__en" lang="en" aria-hidden="true"><?= e($en) ?></span>
+<?php } ?>
+            <span class="titleArea__ja"><?= e($label) ?></span>
+          </<?= $tag ?>>
+        </div>
 <?php
 }
