@@ -1,0 +1,164 @@
+/**
+ * Project - Entry
+ * 記事の本文 (Markdown から変換した HTML)
+ */
+
+$entry-accent:       theme-color("primary");
+$entry-accent-light: rgba(map-get($theme-colors, "primary"), 0.15);
+
+.entry {
+  font-size: font-size("normal");
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
+
+  & > :first-child {
+    margin-block-start: 0;
+  }
+
+  & > :last-child {
+    margin-block-end: 0;
+  }
+
+  p {
+    margin-block: 0 space("medium");
+  }
+
+  // 見出し
+  h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.08em;
+  }
+
+  h2 {
+    margin-block: space("large") space("medium");
+    padding-block-end: space("small");
+    border-block-end: 2px solid $entry-accent-light;
+    background: linear-gradient($entry-accent, $entry-accent) left bottom / 6rem 2px no-repeat;
+    font-size: font-size("x-large");
+  }
+
+  h3 {
+    margin-block: space("large") space("medium");
+    padding-inline-start: space("small");
+    border-inline-start: space("x-small") solid $entry-accent;
+    font-size: font-size("large");
+  }
+
+  h4 {
+    margin-block: space("large") space("medium");
+    color: theme-color("primary");
+    font-size: font-size("medium");
+  }
+
+  h5, h6 {
+    margin-block: space("medium") space("small");
+    font-size: font-size("normal");
+  }
+
+  // リンク
+  a {
+    color: theme-color("primary");
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+
+    &:hover, &:focus {
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  strong {
+    font-weight: 700;
+  }
+
+  // リスト
+  ul, ol {
+    margin-block: 0 space("medium");
+    padding-inline-start: space("medium");
+  }
+
+  li {
+    margin-block: space("x-small");
+    padding-inline-start: space("x-small");
+
+    &::marker {
+      color: $entry-accent;
+    }
+  }
+
+  ol > li::marker {
+    font-weight: 700;
+  }
+
+  li > ul, li > ol {
+    margin-block: space("x-small") 0;
+  }
+
+  // 引用
+  blockquote {
+    margin: space("large") 0;
+    padding: space("medium");
+    border-inline-start: space("x-small") solid $entry-accent;
+    border-radius: 0 space("x-small") space("x-small") 0;
+    background-color: $entry-accent-light;
+    color: theme-color("darker");
+
+    p, cite {
+      font-style: normal;
+      font-size: font-size("normal");
+    }
+
+    p:last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  // 画像 (Markdown の画像は p の中に出力される)
+  img {
+    display: block;
+    border-radius: space("x-small");
+  }
+
+  p:has(> img:only-child), figure {
+    margin-block: space("medium");
+  }
+
+  figcaption {
+    margin-block-start: space("small");
+    color: theme-color("dark");
+  }
+
+  // 表 (狭い画面では横にスクロールさせる)
+  table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin-block: space("medium");
+    overflow-x: auto;
+    font-size: font-size("small");
+    line-height: 1.8;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: space("small");
+    border-block-end: 1px solid theme-color("lighter");
+    white-space: nowrap;
+    vertical-align: top;
+  }
+
+  thead th {
+    border-block-end: 2px solid $entry-accent;
+    background-color: $entry-accent-light;
+    font-weight: 700;
+  }
+
+  // 区切り線
+  hr {
+    height: 0;
+    margin-block: space("large");
+    border: 0;
+    border-block-start: 1px solid theme-color("lighter");
+  }
+}

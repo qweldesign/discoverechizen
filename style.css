@@ -1506,41 +1506,52 @@ button, input, select, textarea {
 
 /**
  * Project - Post Index
+ * 個別記事の横の「最新記事」
  */
 .postIndex {
   list-style: none;
   padding-inline-start: 0;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: var(--spacing--medium);
-}
-.postIndex > * {
-  flex: 0 1 calc(50% - var(--spacing--medium) / 2);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing--large) var(--spacing--medium);
+  margin: 0;
 }
 @media (min-width: 900px) {
   .postIndex {
-    display: block;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 .postIndex__item {
-  display: block;
-  margin: var(--spacing--medium) 0;
+  margin: 0;
 }
-@media (min-width: 1200px) {
-  .postIndex__item {
-    margin-block-end: var(--spacing--large);
-  }
+.postIndex__item a {
+  display: block;
+  text-decoration: none;
+}
+.postIndex__item a:hover .postIndex__title, .postIndex__item a:focus .postIndex__title {
+  color: var(--color--primary);
 }
 .postIndex__image {
   margin-block-end: var(--spacing--small);
+  border-radius: var(--spacing--x-small);
+  aspect-ratio: 8/5;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
-.postIndex__date, .postIndex__title {
+.postIndex__date {
   display: block;
   margin-block-end: var(--spacing--x-small);
+  color: var(--color--dark);
+  font-size: var(--font-size--x-small);
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+}
+.postIndex__title {
+  display: block;
+  color: var(--color--darkest);
   font-size: var(--font-size--small);
-  line-height: 1;
+  line-height: 1.8;
+  letter-spacing: 0.04em;
 }
 
 /**
@@ -1550,19 +1561,26 @@ button, input, select, textarea {
 .postNav {
   display: grid;
   gap: var(--spacing--small);
-  margin-block: var(--spacing--large);
+  margin-block: var(--spacing--large) 0;
+  padding-block-start: var(--spacing--large);
+  border-block-start: 1px solid var(--color--lighter);
 }
-@media (min-width: 900px) {
+@media (min-width: 600px) {
   .postNav {
     grid-template-columns: 1fr 1fr;
   }
 }
 .postNav__link {
   display: block;
-  padding: var(--spacing--small);
-  border: 1px solid var(--color--light);
-  border-radius: var(--spacing--x-small);
+  padding: var(--spacing--small) var(--spacing--medium);
+  border: 1px solid var(--color--lighter);
+  border-radius: var(--spacing--small);
   text-decoration: none;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+.postNav__link:hover, .postNav__link:focus {
+  border-color: var(--color--primary);
+  background-color: rgba(55, 190, 240, 0.05);
 }
 .postNav__link.is-next {
   grid-column: -2;
@@ -1570,11 +1588,92 @@ button, input, select, textarea {
 }
 .postNav__label {
   display: block;
-  color: var(--color--dark);
-  font-size: var(--font-size--small);
+  margin-block-end: var(--spacing--x-small);
+  color: var(--color--primary-dark);
+  font-size: var(--font-size--x-small);
+  letter-spacing: 0.12em;
 }
 .postNav__title {
   display: block;
+  color: var(--color--darkest);
+  font-size: var(--font-size--small);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+}
+
+/**
+ * Project - Post Author
+ * 記事の下の「この記事を書いた人」
+ */
+.postAuthor {
+  margin-block: var(--spacing--large) 0;
+  padding: var(--spacing--medium);
+  border-radius: var(--spacing--small);
+  background-color: rgba(55, 190, 240, 0.1);
+}
+.postAuthor__title {
+  margin: 0 0 var(--spacing--small);
+  color: var(--color--primary-dark);
+  font-weight: 700;
+  font-size: var(--font-size--small);
+  letter-spacing: 0.12em;
+}
+.postAuthor__item + .postAuthor__item {
+  margin-block-start: var(--spacing--medium);
+  padding-block-start: var(--spacing--medium);
+  border-block-start: 1px solid rgba(55, 190, 240, 0.2);
+}
+.postAuthor__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing--small);
+  margin-block-end: var(--spacing--small);
+}
+.postAuthor__image {
+  flex: 0 0 4.5rem;
+  width: 4.5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+@media (min-width: 600px) {
+  .postAuthor__image {
+    flex-basis: 6rem;
+    width: 6rem;
+  }
+}
+.postAuthor__heading {
+  min-width: 0;
+}
+.postAuthor__role {
+  margin: 0;
+  color: var(--color--dark);
+  font-size: var(--font-size--small);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+}
+.postAuthor__name {
+  margin: 0;
+  font-weight: 700;
+  font-size: var(--font-size--medium);
+  line-height: 1.8;
+  letter-spacing: 0.08em;
+}
+.postAuthor__text {
+  font-size: var(--font-size--small);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+}
+.postAuthor__text p {
+  margin: 0;
+}
+.postAuthor__text p + p {
+  margin-block-start: var(--spacing--small);
+}
+.postAuthor__text a {
+  color: var(--color--primary-dark);
+  text-decoration: underline;
 }
 
 /**
@@ -1662,6 +1761,134 @@ button, input, select, textarea {
   color: var(--color--primary-dark);
   text-decoration: underline;
   text-underline-offset: 0.25em;
+}
+
+/**
+ * Project - Entry
+ * 記事の本文 (Markdown から変換した HTML)
+ */
+.entry {
+  font-size: var(--font-size--normal);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
+}
+.entry > :first-child {
+  margin-block-start: 0;
+}
+.entry > :last-child {
+  margin-block-end: 0;
+}
+.entry p {
+  margin-block: 0 var(--spacing--medium);
+}
+.entry h2, .entry h3, .entry h4, .entry h5, .entry h6 {
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+}
+.entry h2 {
+  margin-block: var(--spacing--large) var(--spacing--medium);
+  padding-block-end: var(--spacing--small);
+  border-block-end: 2px solid rgba(55, 190, 240, 0.15);
+  background: linear-gradient(var(--color--primary), var(--color--primary)) left bottom/6rem 2px no-repeat;
+  font-size: var(--font-size--x-large);
+}
+.entry h3 {
+  margin-block: var(--spacing--large) var(--spacing--medium);
+  padding-inline-start: var(--spacing--small);
+  border-inline-start: var(--spacing--x-small) solid var(--color--primary);
+  font-size: var(--font-size--large);
+}
+.entry h4 {
+  margin-block: var(--spacing--large) var(--spacing--medium);
+  color: var(--color--primary);
+  font-size: var(--font-size--medium);
+}
+.entry h5, .entry h6 {
+  margin-block: var(--spacing--medium) var(--spacing--small);
+  font-size: var(--font-size--normal);
+}
+.entry a {
+  color: var(--color--primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+.entry a:hover, .entry a:focus {
+  text-decoration-thickness: 2px;
+}
+.entry strong {
+  font-weight: 700;
+}
+.entry ul, .entry ol {
+  margin-block: 0 var(--spacing--medium);
+  padding-inline-start: var(--spacing--medium);
+}
+.entry li {
+  margin-block: var(--spacing--x-small);
+  padding-inline-start: var(--spacing--x-small);
+}
+.entry li::marker {
+  color: var(--color--primary);
+}
+.entry ol > li::marker {
+  font-weight: 700;
+}
+.entry li > ul, .entry li > ol {
+  margin-block: var(--spacing--x-small) 0;
+}
+.entry blockquote {
+  margin: var(--spacing--large) 0;
+  padding: var(--spacing--medium);
+  border-inline-start: var(--spacing--x-small) solid var(--color--primary);
+  border-radius: 0 var(--spacing--x-small) var(--spacing--x-small) 0;
+  background-color: rgba(55, 190, 240, 0.15);
+  color: var(--color--darker);
+}
+.entry blockquote p, .entry blockquote cite {
+  font-style: normal;
+  font-size: var(--font-size--normal);
+}
+.entry blockquote p:last-child {
+  margin-block-end: 0;
+}
+.entry img {
+  display: block;
+  border-radius: var(--spacing--x-small);
+}
+.entry p:has(> img:only-child), .entry figure {
+  margin-block: var(--spacing--medium);
+}
+.entry figcaption {
+  margin-block-start: var(--spacing--small);
+  color: var(--color--dark);
+}
+.entry table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin-block: var(--spacing--medium);
+  overflow-x: auto;
+  font-size: var(--font-size--small);
+  line-height: 1.8;
+  border-collapse: collapse;
+}
+.entry th, .entry td {
+  padding: var(--spacing--small);
+  border-block-end: 1px solid var(--color--lighter);
+  white-space: nowrap;
+  vertical-align: top;
+}
+.entry thead th {
+  border-block-end: 2px solid var(--color--primary);
+  background-color: rgba(55, 190, 240, 0.15);
+  font-weight: 700;
+}
+.entry hr {
+  height: 0;
+  margin-block: var(--spacing--large);
+  border: 0;
+  border-block-start: 1px solid var(--color--lighter);
 }
 
 /**
