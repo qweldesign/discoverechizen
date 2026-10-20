@@ -126,6 +126,7 @@ const SITE_BANNERS_DIR = 'content/banners';
 // 投稿タイプ以外のページ (サイトのルートからのパス. サイトマップに載せる)
 const SITE_PAGES = [
   'about-us/',
+  'study-tour/',
 ];
 
 // URL の形式 (false: ?slug=xxx, ?page=2 / true: xxx/, page/2/ ※ .htaccess のリライトが必要)
