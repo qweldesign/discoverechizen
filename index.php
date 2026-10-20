@@ -1,39 +1,101 @@
 <?php
 /**
  * トップページ
- * このエンジンの紹介と, ブログの最新記事を並べる
- * 一覧・個別記事は投稿タイプのディレクトリ (blog/, page/) が表示する
+ * 1. メインギャラリー (Fader)
+ * 2. 私たちについて (/about-us/ へのリンク)
+ * 3. ブログ&ニュースの最新記事
+ * 4. 隊員紹介 (content/members/ から自動で並べる. 波のアニメーションの背景)
+ * 5. バナーエリア (Slider. 中身は content/banners/ の Markdown. config.php の SITE_BANNERS_DIR)
+ * 6. お問い合わせ (入力画面. 項目は config.php の SITE_CONTACT_FIELDS. 確認・完了画面は contact/, 送信は api/send.php)
+ * 一覧・個別記事は投稿タイプのディレクトリ (blog-and-news/, page/) が表示する
  */
 require_once __DIR__ . '/inc/templates/postList.php';
+require_once __DIR__ . '/inc/templates/memberList.php';
+require_once __DIR__ . '/inc/templates/contact.php';
+
+// トップに並べる記事の件数
+const HOME_POST_COUNT = 5;
 
 $blog = content_engine('blog', ['slug' => null, 'page' => 1]);
-$latest = $blog->get_posts(1, 3);
-
-// パンくず (SITE_BREADCRUMB の最後の階層 = このサイトのトップが現在地)
-$parents = SITE_BREADCRUMB;
-$current = array_pop($parents);
-$breadcrumb = new ContentNavigation([
-  'parents'     => array_map(fn($crumb) => ['label' => $crumb['label'], 'path' => path($crumb['path'])], $parents),
-  'subdirLabel' => $current['label'] ?? SITE_NAME,
-  'subdirPath'  => path(),
-]);
+$latest = $blog->get_posts(1, HOME_POST_COUNT);
 
 render_header([
-  'path' => '',
-  'type' => 'website',
+  'full_title' => SITE_HOME_TITLE,
+  'path'       => '',
+  'type'       => 'website',
 ]);
 ?>
+    <div class="hero">
+      <div class="hero__gallery fader" data-gallery="fader" data-interval="<?= (int)SITE_HERO_INTERVAL ?>">
+        <ul class="fader__inner">
+<?php foreach (SITE_HERO_PHOTOS as $photo) { ?>
+          <li class="fader__item hero__photo" data-gallery-item style="background-image: url('<?= e(path($photo)) ?>');"></li>
+<?php } ?>
+        </ul>
+      </div>
+      <h1 class="hero__title">
+        <img class="hero__logo" src="<?= e(path(SITE_HERO_LOGO)) ?>" alt="<?= e(SITE_NAME) ?>" width="320" height="320">
+      </h1>
+    </div>
     <main id="main" class="main">
-      <?= $breadcrumb->breadcrumb() ?>
-      <h1 class="main__title">Simple CMS | Created by <span> ― QWEL.DESIGN</span></h1>
-      <ul class="main__list">
-        <li class="main__listItem is-spec">Markdown を HTML に変換して表示</li>
-        <li class="main__listItem is-spec">パンくずリストやページネーションを自動生成</li>
-        <li class="main__listItem is-spec">データベース不要、ファイルベースで管理</li>
-        <li class="main__listItem is-spec">PHP のみで動作、軽量・シンプル</li>
-      </ul>
-      <h2 class="text-center my-large">SAMPLE BLOG</h2>
+      <section class="section" id="about" data-spy-section>
+<?php render_title_area('私たちについて', 'about us'); ?>
+        <div class="section__row" data-readable>
+          <figure class="flexItem-5">
+            <img src="<?= e(path('content/images/members/00.jpg')) ?>" alt="越前海岸盛り上げ隊の隊員たち" width="720" height="400" loading="lazy">
+          </figure>
+          <div class="entry flexItem-4">
+            <p>越前海岸盛り上げ隊は、越前海岸の「いま」をできるだけ面白くしようと奮闘する大人たちのゆるやかな集まりです。</p>
+            <p>過疎化の波は大きいけれど、工夫次第でいかようにも乗りこなせるはず。</p>
+            <p class="section__more is-start"><a class="moreLink" href="<?= e(path('about-us/')) ?>"><span class="moreLink__label">越前海岸盛り上げ隊とは</span></a></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="blog" data-spy-section>
+<?php render_title_area(post_type('blog')['label'], post_type('blog')['en']); ?>
+<?php if ($latest) { ?>
 <?php render_post_list($latest, 'blog'); ?>
-      <p class="text-center my-large"><a href="<?= e(type_url('blog')) ?>">記事の一覧へ</a></p>
+        <p class="section__more"><a class="moreLink" href="<?= e(type_url('blog')) ?>"><span class="moreLink__label"><?= e(post_type('blog')['label']) ?>をもっと見る</span></a></p>
+<?php } else { ?>
+        <p class="section__empty">記事はまだありません。</p>
+<?php } ?>
+      </section>
+
+<?php if (members()) { ?>
+      <section class="section is-wide waveArea" id="members" data-spy-section>
+        <div class="waveArea__inner">
+<?php render_title_area('隊員紹介', 'members'); ?>
+<?php render_member_list(members(), 'is-scroll'); ?>
+        </div>
+      </section>
+<?php } ?>
+
+<?php $banners = banners(); ?>
+<?php if ($banners) { ?>
+      <section class="section is-wide" id="banners" data-spy-section data-readable>
+        <div class="section__inner">
+<?php render_title_area('私たちの活動', 'our projects'); ?>
+        </div>
+        <div class="slider" data-gallery="slider" data-gap="48" data-interval="5000">
+          <ul class="slider__inner" data-gallery-main>
+<?php foreach ($banners as $banner) {
+  $isExternal = (bool)preg_match('#^https?://#', $banner['url']);
+  $target = $isExternal ? ' target="_blank" rel="noopener"' : '';
+?>
+            <li class="slider__item" data-gallery-item>
+              <a href="<?= e(path($banner['url'])) ?>"<?= $target ?>><img src="<?= e(path($banner['img'])) ?>" alt="<?= e($banner['title'] ?? '') ?>" width="1200" height="630" loading="lazy"></a>
+            </li>
+<?php } ?>
+          </ul>
+        </div>
+      </section>
+<?php } ?>
+
+      <section class="section" id="contact" data-spy-section>
+<?php render_title_area('お問い合わせ', 'contact'); ?>
+        <p class="section__lead" data-readable><?= SITE_CONTACT['lead'] ?></p>
+<?php render_contact_form(false, ' data-readable'); ?>
+      </section>
     </main>
 <?php render_footer(); ?>

@@ -40,6 +40,7 @@ function post_type(string $type): array {
     'count'     => 10,
     'show_date' => true,
     'lead'      => '',
+    'en'        => '',
     'list'      => true,
   ];
 }
@@ -108,4 +109,32 @@ function content_engine(string $type, array $options = []): ContentEngine {
       'firstPageUrl' => type_url($type),
     ],
   ]);
+}
+
+// トップページのバナーを全部取得する (order の順. order がないバナーは後ろに並べる)
+function banners(): array {
+  if (SITE_BANNERS_DIR === '') return [];
+  $banners = (new ContentLoader(dirname(__DIR__) . '/' . trim(SITE_BANNERS_DIR, '/') . '/'))->load();
+  $banners = array_filter($banners, fn($banner) => !empty($banner['url']) && !empty($banner['img']));
+  usort($banners, fn($a, $b) => (int)($a['order'] ?? 999) <=> (int)($b['order'] ?? 999));
+  return $banners;
+}
+
+// 隊員を全員取得する (プロフィールの order の順. order がない隊員は後ろに並べる)
+function members(): array {
+  if (SITE_MEMBERS_DIR === '') return [];
+  static $members = null;
+  if ($members === null) {
+    $members = (new ContentLoader(dirname(__DIR__) . '/' . trim(SITE_MEMBERS_DIR, '/') . '/'))->load();
+    usort($members, fn($a, $b) => (int)($a['order'] ?? 999) <=> (int)($b['order'] ?? 999));
+  }
+  return $members;
+}
+
+// slug から隊員を1人取得する (見つからなければ null)
+function member(string $slug): ?array {
+  foreach (members() as $member) {
+    if (($member['slug'] ?? null) === $slug) return $member;
+  }
+  return null;
 }

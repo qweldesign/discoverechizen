@@ -12,13 +12,17 @@
  *   index.php:         render_contact('form');
  *   confirm/index.php: render_contact('confirm');
  *   thanks/index.php:  render_contact('thanks');
+ * 入力画面をトップページのセクションなどに置く場合は, SITE_CONTACT の form_url を設定し,
+ * その場所で render_contact_form() を呼ぶ (index.php は form_url へ転送する)
  */
 
 require_once dirname(__DIR__) . '/partials/site.php';
 require_once dirname(__DIR__) . '/ContactForm.php';
 
 // お問い合わせフォームの各画面の URL ($step: '' (入力), 'confirm/', 'thanks/')
+// 入力画面は, form_url があればその URL
 function contact_url(string $step = ''): string {
+  if ($step === '' && !empty(SITE_CONTACT['form_url'])) return path(SITE_CONTACT['form_url']);
   return path(SITE_CONTACT['path'] . $step);
 }
 
@@ -26,6 +30,12 @@ function contact_url(string $step = ''): string {
  * $step: form (入力), confirm (確認), thanks (完了)
  */
 function render_contact(string $step): void {
+  // 入力画面を別の場所に置いている場合は, そこへ転送する
+  if ($step === 'form' && !empty(SITE_CONTACT['form_url'])) {
+    header('Location: ' . contact_url(), true, 301);
+    exit;
+  }
+
   $title = SITE_CONTACT['title'];
   $stepTitles = ['confirm' => '入力内容の確認', 'thanks' => '送信完了'];
   $stepTitle = $stepTitles[$step] ?? null;
@@ -59,13 +69,15 @@ function render_contact(string $step): void {
   render_footer();
 }
 
-// 入力画面
-function render_contact_form(): void {
+// 入力画面 (トップページのセクションなどからも呼べる)
+// $showLead: フォームの上に SITE_CONTACT の lead を出すか
+// $attrs: form 要素に足す属性 (例: ' data-readable')
+function render_contact_form(bool $showLead = true, string $attrs = ''): void {
 ?>
-<?php if (!empty(SITE_CONTACT['lead'])) { ?>
+<?php if ($showLead && !empty(SITE_CONTACT['lead'])) { ?>
       <p class="main__lead"><?= SITE_CONTACT['lead'] ?></p>
 <?php } ?>
-      <form class="form" data-contact-form data-confirm-url="<?= e(contact_url('confirm/')) ?>">
+      <form class="form" data-contact-form data-confirm-url="<?= e(contact_url('confirm/')) ?>"<?= $attrs ?>>
         <table>
 <?php foreach (SITE_CONTACT_FIELDS as $name => $field) { ?>
 <?php render_contact_field($name, $field); ?>
@@ -155,7 +167,7 @@ function render_contact_thanks(): void {
 ?>
       <div class="thanks">
         <p>お問い合わせありがとうございました。<br>ご入力いただいたメールアドレスに、確認のメールをお送りしました。</p>
-        <p><a href="<?= e(path()) ?>">トップへ戻る</a></p>
+        <p class="section__more"><a class="moreLink" href="<?= e(path()) ?>"><span class="moreLink__label">トップへ戻る</span></a></p>
       </div>
 <?php
 }

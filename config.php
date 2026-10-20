@@ -9,56 +9,70 @@
 date_default_timezone_set('Asia/Tokyo');
 
 // サイト名 (<title> の「記事タイトル | サイト名」と og:site_name に使う)
-const SITE_NAME = 'SIMPLE CMS | QWEL in Action';
+const SITE_NAME = '越前海岸盛り上げ隊';
+// トップページの <title>
+const SITE_HOME_TITLE = '海！山！里！地域の魅力を再発見！ - 越前海岸盛り上げ隊';
 // サイトの URL (末尾のスラッシュなし. OGP, canonical の絶対URLに使う)
-const SITE_URL = 'https://qwel.design';
+const SITE_URL = 'https://discoverechizen.com';
 // サイトのルートのパス (ドメイン直下なら '/'. 例: /tools/simple-cms/ に置く場合)
-const SITE_ROOT = '/tools/simple-cms/';
+const SITE_ROOT = '/';
 // サイトの説明 (description の既定値)
-const SITE_DESCRIPTION = 'Markdown ファイルを記事として読み込み、HTML に変換して表示するシンプルな PHP エンジンのデモです。';
-// OGP 画像の既定値 (サイトのルートからのパス)
-const SITE_OGP_IMAGE = 'content/images/about/fig_story.jpg';
+const SITE_DESCRIPTION = '福井市越前海岸は、どこにでもある、新しい海辺。福井県敦賀市杉津から、坂井市三国町安島に至る海岸線です。目の前に日本海の広がるこの地には、のんびりと流れる時間があります。越前海岸盛り上げ隊は、越前海岸の「いま」をできるだけ面白くしようと奮闘する大人たちの集まりです。';
+// OGP 画像の既定値 (サイトのルートからのパス. 1200 × 630. 個別に画像を指定したページ・記事はそちらを使う)
+const SITE_OGP_IMAGE = 'assets/photos/main00.jpg';
 // 記事一覧のサムネイルの既定値 (記事にアイキャッチがない場合)
-const SITE_THUMBNAIL_IMAGE = 'content/images/about/fig_story.jpg';
+const SITE_THUMBNAIL_IMAGE = 'assets/photos/main00.jpg';
 // Google Fonts などの読み込み (不要なら空文字)
-const SITE_FONTS_URL = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Noto+Sans:wght@100..900&family=Noto+Serif:wght@100..900&display=swap';
+const SITE_FONTS_URL = '';
 // 言語
 const SITE_LANG = 'ja';
+// Google アナリティクスの測定 ID (不要なら空文字)
+const SITE_GA_ID = 'UA-140782462-8';
 
 // ヘッダーのロゴ (画像のパスとリンク先. 画像がなければ SITE_NAME を文字で出す)
-const SITE_LOGO = 'logo_animation.svg';
-const SITE_LOGO_LINK = 'https://qwel.design/';
+const SITE_LOGO = 'assets/logo/discover-echizen-coast-wide.svg';
+const SITE_LOGO_LINK = '';
+// トップページのメインギャラリーの中央のロゴ
+const SITE_HERO_LOGO = 'assets/logo/discover-echizen-coast-lg.svg';
+// メインギャラリーの写真 (サイトのルートからのパス. 並び順に表示する)
+const SITE_HERO_PHOTOS = [
+  'assets/photos/main00.jpg',
+  'assets/photos/main01.jpg',
+  'assets/photos/main02.jpg',
+  'assets/photos/main03.jpg',
+  'assets/photos/main04.jpg',
+  'assets/photos/main05.jpg',
+];
+// メインギャラリーの切り替え間隔 (ミリ秒)
+const SITE_HERO_INTERVAL = 5000;
+// フッターのロゴ (不要なら空文字)
+const SITE_FOOTER_LOGO = 'assets/logo/discover-echizen-coast-wide.svg';
 
 // ヘッダーのナビ (サイトのルートからのパス => 表示名. 不要なら空の配列)
+// 「#」から始まるものはトップページのセクションへのリンク (トップでは #xxx, ほかのページでは /#xxx にする)
+// モバイルではドロワーメニューに同じ項目を出す. トップでは ScrollSpy で今いるセクションに is-current が付く
 const SITE_NAV = [
-  'blog/'       => 'Blog',
-  'page/about/' => 'About',
+  '#about'   => '私たちについて',
+  '#blog'    => 'ブログ&ニュース',
+  '#members' => '隊員紹介',
+  '#banners' => '私たちの活動',
+  '#contact' => 'お問い合わせ',
 ];
 
 // パンくずの先頭の階層 (path はサイトのルートからのパス, または http から始まる URL)
 const SITE_BREADCRUMB = [
-  ['label' => 'QWEL in Action: Creative Tools', 'path' => 'https://qwel.design/tools/'],
-  ['label' => 'Simple CMS', 'path' => ''],
+  ['label' => 'トップ', 'path' => ''],
 ];
 
 // フッターのリンク (サイトのルートからのパス => 表示名)
-const SITE_FOOTER_LINKS = [
-  ''            => 'Top',
-  'blog/'       => 'Blog',
-  'page/'       => 'Pages',
-  'contact/'    => 'Contact',
-  'sitemap.xml' => 'Sitemap',
-];
+const SITE_FOOTER_LINKS = [];
 
 // フッターの SNS など (url は http から始まる URL, またはサイトのルートからのパス. icon は icons.svg の symbol の id)
-const SITE_SNS = [
-  ['label' => 'GitHub', 'url' => 'https://github.com/qweldesign', 'icon' => 'si-github'],
-  ['label' => 'Contact Me', 'url' => 'contact/', 'icon' => 'si-mail'],
-];
+const SITE_SNS = [];
 
 // 著作権表示 (開始年 - 今年 運営者)
-const SITE_OWNER = 'QWEL.DESIGN';
-const SITE_START_YEAR = 2019;
+const SITE_OWNER = '福井市越前海岸盛り上げ隊';
+const SITE_START_YEAR = 2015;
 
 /**
  * 投稿タイプ
@@ -70,19 +84,21 @@ const SITE_START_YEAR = 2019;
  * count: 一覧の1ページあたりの件数 (null で全件)
  * show_date: 日付を表示するか
  * lead: 一覧の見出しの下の文
+ * en: 見出しの上に重ねる英語 (トップのセクションと一覧ページの見出し. 不要なら空文字)
  */
 const SITE_POST_TYPES = [
   'blog' => [
-    'label'     => 'Blog',
-    'path'      => 'blog/',
+    'label'     => 'ブログ&ニュース',
+    'en'        => 'blog & news',
+    'path'      => 'blog-and-news/',
     'dir'       => 'content/blog',
     'count'     => 10,
     'show_date' => true,
-    'lead'      => 'Markdown で書いた記事のサンプルです。',
+    'lead'      => '',
   ],
   // 固定ページ (日付を出さず, 一覧は全件を1ページに出す)
   'page' => [
-    'label'     => 'Pages',
+    'label'     => 'ページ',
     'path'      => 'page/',
     'dir'       => 'content/page',
     'count'     => null,
@@ -91,19 +107,31 @@ const SITE_POST_TYPES = [
   ],
 ];
 
-// URL の形式 (false: ?slug=xxx, ?page=2 / true: xxx/, page/2/ ※ .htaccess のリライトが必要)
-const SITE_PRETTY_URLS = true;
+// 隊員のプロフィール (記事の author に書いた slug と同じ名前の Markdown を置くディレクトリ)
+// 記事の下の「この記事を書いた人」に使う. 不要なら空文字
+const SITE_MEMBERS_DIR = 'content/members';
+
+// トップページのバナーエリア「私たちの活動」(スライダー) の Markdown を置くディレクトリ. 不要なら空文字
+// 1ファイル = バナー1枚. frontmatter は title, url, img, order (本文は使わない)
+//   title: バナーの名前 (画像の alt に使う)
+//   url: リンク先 (サイトのルートからのパス, または http から始まる URL. 外部リンクは別タブで開く)
+//   img: 画像 (1200 × 630. content/images/banners/ に置く. 外部サイトは各サイトの OGP 画像)
+//   order: 並び順 (小さい順. 書かなければ後ろに並べる)
+const SITE_BANNERS_DIR = 'content/banners';
 
 // 投稿タイプ以外のページ (サイトのルートからのパス. サイトマップに載せる)
 const SITE_PAGES = [
-  'contact/',
 ];
 
+// URL の形式 (false: ?slug=xxx, ?page=2 / true: xxx/, page/2/ ※ .htaccess のリライトが必要)
+const SITE_PRETTY_URLS = true;
+
 /**
- * お問い合わせフォーム (/contact/)
+ * お問い合わせフォーム (入力: トップページの #contact, 確認・完了: /contact/confirm/, /contact/thanks/)
  * SMTP のパスワードなど秘密の値は inc/.env に書く (inc/.env.example を参照)
  *
  * path: フォームの URL (サイトのルートからのパス. 同じ名前のディレクトリに index.php, confirm/, thanks/ を置く. 送信は api/send.php)
+ * form_url: 入力画面を別の場所 (トップページのセクションなど) に置く場合の URL (サイトのルートからのパス)
  * title: ページのタイトル
  * lead: フォームの上の説明文 (HTML 可)
  * interval: 同じ人 (セッション) が続けて送信できるまでの秒数 (0 で制限しない)
@@ -112,15 +140,16 @@ const SITE_PAGES = [
  */
 const SITE_CONTACT = [
   'path'         => 'contact/',
+  'form_url'     => '#contact',
   'title'        => 'お問い合わせ',
-  'lead'         => 'このページは、<strong>QWEL.DESIGN</strong> へのお問い合わせフォームです。<br>お気軽にお問い合わせください。',
+  'lead'         => '越前海岸盛り上げ隊へのご質問・ご相談は、こちらのフォームからお気軽にお寄せください。',
   'interval'     => 60,
   'reply_footer' => "
 後日ご返信致しますので今しばらくお待ちください。
 
 ────────────────────────────────────────────────
-福井の物作りのためのweb制作&プログラミング教室
-QWEL.DESIGN (クヴェル・デザイン)
+福井市越前海岸盛り上げ隊
+https://discoverechizen.com
 ────────────────────────────────────────────────
 ",
   'env'          => __DIR__ . '/inc/.env',
@@ -149,9 +178,8 @@ const SITE_CONTACT_FIELDS = [
     'autocomplete' => 'email',
   ],
   'subject' => [
-    'label'   => '件名',
-    'type'    => 'select',
-    'options' => ['ご質問・お問い合わせ', 'その他'],
+    'label' => '件名',
+    'type'  => 'text',
   ],
   'message' => [
     'label'    => 'メッセージ本文',

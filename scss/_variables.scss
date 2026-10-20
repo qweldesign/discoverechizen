@@ -1,2 +1,27 @@
 // Variables
+// 越前海岸盛り上げ隊 (https://discoverechizen.com/) の配色・書体に合わせる
 
+$colors:             (
+  primary:             #37bef0,
+  primary-dark:        #18aada,
+  secondary:           #f08c1e
+);
+
+$theme-accent:       "primary-dark";
+
+// コンテナの左右の余白 (ガター)
+// 既定 (clamp(0.75rem, 2%, 1.5rem)) ではモバイルで狭すぎるため, 最小を 1.25rem に広げる
+$container-pads: (
+  sm:                0.75rem,
+  md:                clamp(1.25rem, 4%, 1.5rem),
+  lg:                clamp(1.25rem, 4%, 1.5rem)
+);
+
+// ドロワー
+$drawer-site-brand-width:  10.5rem;
+
+// メインギャラリーの写真は index.php で指定するので, Fader の既定の画像クラスは出力しない
+$gallery-image-count: 0;
+
+// スライダー (バナーの画像は 1200 × 630. OGP 画像と同じ比率にそろえる)
+$slider-aspect-ratio: 1.905;

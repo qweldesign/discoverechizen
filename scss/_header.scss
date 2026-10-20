@@ -1,24 +1,124 @@
 /**
- * Header
+ * Layout - Header
+ * 左上にロゴ (wide), 右にナビ (config.php の SITE_NAV) を置く
+ * モバイル (md 未満) ではナビを隠し, ActionCore の DrawerMenu に任せる
+ *
+ * 画面上部に固定し, 次のときは背景を白にする (ロゴ・ナビも白抜きをやめて元の色に戻す)
+ * - 1px 以上スクロールしたとき (ActionCore の ActiveHeader が is-active を外す)
+ * - マウスを乗せたとき
  */
 
+$header-bg-transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
 .header {
-  width: min(100%, 768px);
-  margin: 0 auto;
-  padding: 0 clamp(0.75rem, 2%, 1.5rem);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: space("medium");
+  width: 100%;
+  padding: space() clamp(0.75rem, 2%, 1.5rem);
+  transition: $header-bg-transition;
 }
 
 #logo {
-  width: 7.2rem;
-  margin: 0;
+  height: 3.75rem;
+  margin: -0.375rem 0;
+
+  a {
+    display: block;
+    height: 100%;
+  }
+
+  img {
+    display: block;
+    width: auto;
+    height: 100%;
+    filter: invert(1) grayscale(1) brightness(4); // 白抜き
+  }
 }
 
 // ナビ (config.php の SITE_NAV)
-.header__nav ul {
-  @include list-unstyled();
-  display: flex;
-  flex-wrap: wrap;
-  gap: space("x-small") space("medium");
-  margin: 0;
-  font-size: font-size("small");
+.header__nav {
+  @media (max-width: breakpoint("md") - 0.1px) {
+    display: none;
+  }
+
+  ul {
+    @include list-unstyled();
+    display: flex;
+    flex-wrap: wrap;
+    gap: space("x-small") space("medium");
+    margin: 0;
+    font-size: font-size("small");
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  a {
+    display: block;
+    padding-block: space("x-small");
+    border-bottom: 2px solid transparent;
+    color: theme-color("primary-dark");
+    text-decoration: none;
+    transition: border-color 0.25s ease;
+
+    &:hover, &:focus-visible {
+      border-bottom-color: currentColor;
+    }
+  }
+
+  // ScrollSpy が今いるセクションの項目に付ける
+  .is-current a {
+    border-bottom-color: currentColor;
+  }
+
+  // トップページ (メインギャラリーの写真の上) では白抜き
+  .header:not(:has(+ .main)) & a {
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+// ヘッダーは重ねて置くので, トップページ以外は本文をヘッダーの下から始める
+.header + .main {
+  padding-block-start: 6rem;
+}
+
+// 背景を白にする状態 (スクロールした / マウスを乗せた)
+@mixin header-on-white() {
+  background-color: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+
+  #logo img {
+    filter: none;
+  }
+
+  .header__nav a {
+    color: theme-color("primary-dark");
+    text-shadow: none;
+  }
+}
+
+.header:not(.is-active) {
+  @include header-on-white();
+}
+
+@media (hover: hover) {
+  .header:hover {
+    @include header-on-white();
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header {
+    transition: none;
+  }
 }

@@ -1,0 +1,125 @@
+/**
+ * Project - Home
+ * トップページのセクションの追加分 (私たちについて, 隊員紹介の波, バナーエリア, お問い合わせ)
+ */
+
+// 波の色 (濃いめの青. 重なっても色が変わらないように透過は使わない)
+// SVG の fill に埋め込むので, 16進数で書く
+$wave-color:      #18aada; // 手前の波とセクションの背景 (primary-dark)
+$wave-back-color: #37bef0; // 奥の波 (primary)
+$wave-height:     4.5rem;
+
+// 波の形 (横 1200 × 縦 40 で1周期. 横に繰り返して流す)
+@function wave-svg($color) {
+  $fill: "%23" + str-slice(inspect($color), 2);
+  @return url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath fill='#{$fill}' d='M0 20 Q150 0 300 20 T600 20 T900 20 T1200 20 V40 H0Z'/%3E%3C/svg%3E");
+}
+
+// 画面幅いっぱいのセクションが横スクロールを生まないように
+body {
+  overflow-x: clip;
+}
+
+.section {
+  // 画面幅いっぱいに広げる (.main のコンテナの外へはみ出す)
+  &.is-wide {
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+  }
+
+  &__inner {
+    @include container();
+  }
+
+  // 段組みの中の「もっと見る」は左寄せ
+  &__more.is-start {
+    margin-block-start: space("medium");
+    text-align: left;
+  }
+
+  &__lead {
+    margin-block: 0 space("large");
+    text-align: center;
+    letter-spacing: 0.06em;
+  }
+}
+
+// 隊員紹介の背景 (上下の波がゆっくり流れる)
+.waveArea {
+  position: relative;
+  margin-block: $wave-height;
+  padding-block-end: calc(#{space("x-large")} + 1rem);
+  background-color: $wave-color;
+
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: $wave-height;
+    // 手前の波 (1200px で1周期) と, 奥の高い波 (800px で1周期)
+    background-image: wave-svg($wave-color), wave-svg($wave-back-color);
+    background-repeat: repeat-x;
+    background-size: 1200px 70%, 800px 100%;
+    background-position: 0 bottom, 0 bottom;
+    animation: waveArea-flow 24s linear infinite;
+    pointer-events: none;
+  }
+
+  &::before {
+    bottom: 100%;
+  }
+
+  // 下の波は上下を反転し, 逆向きに流す
+  &::after {
+    top: 100%;
+    transform: scaleY(-1);
+    animation-direction: reverse;
+  }
+
+  &__inner {
+    @include container();
+    position: relative;
+  }
+
+  // 見出しは白抜き (左右の波の装飾も白にする)
+  .titleArea {
+    margin-block-start: 0;
+    background: none;
+
+    &::before, &::after {
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  .titleArea__title {
+    color: #fff;
+  }
+
+  // 隊員のカードは白地に
+  .memberList__item {
+    background-color: #fff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::before, &::after {
+      animation: none;
+    }
+  }
+}
+
+@keyframes waveArea-flow {
+  from {
+    background-position: 0 bottom, 0 bottom;
+  }
+  to {
+    background-position: 1200px bottom, -800px bottom;
+  }
+}
+
+// お問い合わせ
+#contact .form {
+  max-width: 40rem;
+  margin-inline: auto;
+}

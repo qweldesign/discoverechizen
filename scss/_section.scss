@@ -1,0 +1,23 @@
+/**
+ * Project - Section
+ * トップページの各セクション
+ */
+
+.section {
+  padding-block: space("x-large");
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: space("medium") 0;
+  }
+
+  &__more, &__empty {
+    margin-block: space("x-large") 0;
+    text-align: center;
+    letter-spacing: 0.08em;
+  }
+
+}

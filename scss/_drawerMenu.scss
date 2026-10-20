@@ -51,6 +51,27 @@ $drawer-site-brand-width:    6rem !default;
       opacity: 1;
       transform: rotateY(0);
     }
+
+    // 下の線を短くして左右対称を崩す (上 100% / 下 60%、右端そろえ)
+    // ホバーで下の線が伸びて上とそろう
+    .icon.is-menu > .icon__span {
+      border-block-end-width: 0;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 65%;
+        border-block-end: 2px solid;
+        border-color: inherit;
+        transition: width 0.25s ease;
+      }
+    }
+
+    .drawer:hover & .icon.is-menu > .icon__span::after {
+      width: 100%;
+    }
   }
 
   &__close {
@@ -149,8 +170,11 @@ $drawer-site-brand-width:    6rem !default;
         padding: 0 0 0 20%;
       }
 
+      // ヘッダーから複製したロゴは, ドロワーの背景の上で白抜きにする
       img {
         width: $drawer-site-brand-width;
+        height: auto;
+        filter: invert(1) grayscale(1) brightness(4);
       }
     }
 
