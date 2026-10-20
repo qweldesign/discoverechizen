@@ -23,6 +23,7 @@ render_header([
   'title'       => ABOUT_US_TITLE,
   'description' => '越前海岸盛り上げ隊は、越前海岸の「いま」をできるだけ面白くしようと奮闘する大人たちのゆるやかな集まりです。',
   'path'        => 'about-us/',
+  'image'       => 'assets/banners/about-us.jpg',
 ]);
 ?>
     <main id="main" class="main">

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>Banner - 教育旅行</title>
+    <link rel="stylesheet" href="./assets/common.css">
+    <style>
+      .photos {
+        position: absolute;
+        inset: 0 0 auto;
+        display: grid;
+        grid-template-columns: repeat(5, 240px);
+        grid-auto-rows: 180px;
+      }
+
+      .photos img {
+        display: block;
+        width: 240px;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .panel {
+        position: absolute;
+        inset: auto 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 270px;
+        padding: 0 90px;
+        background: #fff;
+      }
+
+      .en {
+        font-size: 30px;
+      }
+
+      .title {
+        font-size: 48px;
+      }
+
+      .title small {
+        display: block;
+        margin-top: 12px;
+        font-size: 24px;
+        color: var(--text);
+        letter-spacing:
+        0.12em;
+      }
+
+      .chips {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .chip {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 36px;
+        border-radius: 24px;
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: 0.08em;
+      }
+
+      .chip::before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+
+      .sea {
+        background: rgba(55,190,240,.12);
+        color: var(--primary-dark);
+      }
+
+      .mountain {
+        background: rgba(90,174,58,.14);
+        color: #3d8a2a;
+      }
+
+      .village {
+        background: rgba(240,140,30,.12);
+        color: #b85410;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ogp">
+      <div class="photos">
+        <img src="./assets/st-01.jpg">
+        <img src="./assets/st-02.jpg">
+        <img src="./assets/st-03.jpg">
+        <img src="./assets/st-04.jpg">
+        <img src="./assets/st-05.jpg">
+        <img src="./assets/st-06.jpg">
+        <img src="./assets/st-07.jpg">
+        <img src="./assets/st-08.jpg">
+        <img src="./assets/st-09.jpg">
+        <img src="./assets/st-10.jpg">
+      </div>
+      <div class="panel wave">
+        <div>
+          <p class="en">study tour</p>
+          <h1 class="title">教育旅行<small>越前海岸の暮らしを見つける旅</small></h1>
+        </div>
+        <div class="chips">
+          <span class="chip sea">海の体験</span>
+          <span class="chip mountain">山の体験</span>
+          <span class="chip village">里の体験</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
