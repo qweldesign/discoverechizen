@@ -111,6 +111,9 @@ const SITE_POST_TYPES = [
 // 記事の下の「この記事を書いた人」に使う. 不要なら空文字
 const SITE_MEMBERS_DIR = 'content/members';
 
+// 隊員ごとの記事一覧 (/member/xxx/) に並べる投稿タイプ (記事の author に隊員の slug を書いたもの)
+const MEMBER_POST_TYPE = 'blog';
+
 // 沿革 (/about-us/ の年表) の Markdown を置くディレクトリ. 不要なら空文字
 // 1ファイル = 年表の1組 (見出し・本文・写真). frontmatter は year, order, heading, img, alt. 本文は Markdown
 const SITE_HISTORY_DIR = 'content/history';

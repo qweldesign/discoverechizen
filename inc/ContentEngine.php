@@ -29,6 +29,7 @@ class ContentEngine {
    * baseUrl: 本文中の「./」で始まる画像・リンクのパスを, この URL からのパスに置き換える
    *          (例: '/tools/simple-cms/'. 記事の URL の階層が深くても, 原稿は ./content/images/... と書ける)
    * slug, page: 個別記事の slug と一覧のページ番号 (規定で $_GET['slug'], $_GET['page'])
+   * filter: 記事を絞り込む関数 (記事の配列を受け取り, 残すなら true を返す. 例: 書いた人ごとの一覧)
    */
   public function __construct(array $options = []) {
     $count = array_key_exists('count', $options) ? $options['count'] : 10;
@@ -44,8 +45,11 @@ class ContentEngine {
     $dir    = $options['dir'] ?? dirname(__DIR__) . '/content/';
     $loader = new ContentLoader($dir);
 
-    // 全記事取得
+    // 全記事取得 (filter があれば絞り込む)
     $this->posts = $loader->load();
+    if (isset($options['filter'])) {
+      $this->posts = array_values(array_filter($this->posts, $options['filter']));
+    }
 
     // 個別記事取得 (読み込み済みの記事から探す)
     if ($this->is_single()) {

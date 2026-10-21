@@ -7,6 +7,7 @@
  *
  * 記事の下の「この記事を書いた人」(.postAuthor)
  * 記事の frontmatter の author に書いた slug から, SITE_MEMBERS_DIR のプロフィールを表示する
+ * プロフィールの下に, 隊員ごとの記事一覧 (/member/xxx/) へのリンクを置く
  */
 
 require_once dirname(__DIR__) . '/partials/site.php';
@@ -34,6 +35,7 @@ function render_post_author(array $members): void {
               <div class="postAuthor__text">
 <?= $parsedown->text($member['content'] ?? '') ?>
               </div>
+              <p class="postAuthor__more"><a class="moreLink" href="<?= e(member_url($member['slug'] ?? '')) ?>"><span class="moreLink__label"><?= e($member['title'] ?? '') ?>の記事一覧</span></a></p>
             </div>
 <?php } ?>
           </section>

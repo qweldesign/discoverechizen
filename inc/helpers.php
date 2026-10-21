@@ -111,11 +111,16 @@ function content_engine(string $type, array $options = []): ContentEngine {
   ]);
 }
 
-// 記事の author ("slug-a, slug-b" のようにカンマ区切り) から, 隊員のプロフィールを取得する
+// 記事の author ("slug-a, slug-b" のようにカンマ区切り) を slug の配列にする
+function author_slugs(string $author): array {
+  return array_values(array_filter(array_map('trim', explode(',', trim($author, '" ')))));
+}
+
+// 記事の author から, 隊員のプロフィールを取得する
 // プロフィールのファイルがない slug は飛ばす
 function post_authors(string $author): array {
   if (SITE_MEMBERS_DIR === '') return [];
-  $slugs = array_filter(array_map('trim', explode(',', trim($author, '" '))));
+  $slugs = author_slugs($author);
   if (!$slugs) return [];
 
   $members = [];
@@ -169,4 +174,33 @@ function history_items(): array {
     $items[$entry['year']]['entries'][] = $entry;
   }
   return array_values($items);
+}
+
+// 隊員ごとの記事一覧 (/member/xxx/, 2ページ目以降: /member/xxx/page/2/) のパス
+// $page は %d も受け付ける (ContentNavigation の pageUrl 用)
+function member_path(string $slug, int|string $page = 1): string {
+  $slug = rawurlencode($slug);
+  if (SITE_PRETTY_URLS) {
+    return 'member/' . $slug . '/' . ($page === 1 ? '' : 'page/' . $page . '/');
+  }
+  return 'member/?member=' . $slug . ($page === 1 ? '' : '&page=' . $page);
+}
+
+function member_url(string $slug, int|string $page = 1): string {
+  return path(member_path($slug, $page));
+}
+
+// 隊員ごとの記事の件数 ([slug => 件数]. トップの隊員紹介のカードから記事一覧へのリンクに使う)
+function member_post_counts(): array {
+  static $counts = null;
+  if ($counts === null) {
+    $counts = [];
+    $posts = (new ContentLoader(dirname(__DIR__) . '/' . trim(post_type(MEMBER_POST_TYPE)['dir'], '/') . '/'))->load();
+    foreach ($posts as $post) {
+      foreach (author_slugs($post['author'] ?? '') as $slug) {
+        $counts[$slug] = ($counts[$slug] ?? 0) + 1;
+      }
+    }
+  }
+  return $counts;
 }

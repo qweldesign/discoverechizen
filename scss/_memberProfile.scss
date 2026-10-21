@@ -1,0 +1,104 @@
+/**
+ * Project - Member Profile
+ * 隊員ごとの記事一覧 (/member/xxx/): 上のプロフィール (.memberProfile) と, 下の記事一覧 (.memberPosts)
+ * 記事一覧のカードはブログの一覧と同じ (.postList)
+ */
+
+// プロフィール (写真と, 肩書き・名前・紹介文. PC では横に並べる)
+.memberProfile {
+  display: grid;
+  gap: space("medium") space("large");
+  justify-items: center;
+  max-width: 48rem;
+  margin: space("large") auto space("x-large");
+  padding: space("large") space("medium");
+  border-radius: space("medium");
+  background-color: rgba(map-get($theme-colors, "primary"), 0.1);
+
+  @media (min-width: breakpoint("md")) {
+    grid-template-columns: 12rem minmax(0, 1fr);
+    align-items: center;
+    justify-items: stretch;
+    padding: space("large");
+  }
+
+  &__image {
+    width: 9rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+
+    @media (min-width: breakpoint("md")) {
+      width: 100%;
+    }
+  }
+
+  &__body {
+    width: 100%;
+    min-width: 0;
+  }
+
+  &__role {
+    margin: 0;
+    color: theme-color("dark");
+    font-size: font-size("small");
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+  }
+
+  &__name {
+    margin: 0 0 space("small");
+    font-weight: 700;
+    font-size: font-size("x-large");
+    line-height: 1.6;
+    letter-spacing: 0.08em;
+  }
+
+  &__text {
+    font-size: font-size("small");
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+
+    p {
+      margin: 0;
+    }
+
+    p + p {
+      margin-block-start: space("small");
+    }
+
+    a {
+      color: theme-color("primary-dark");
+      text-decoration: underline;
+    }
+  }
+}
+
+// 隊員が書いた記事の一覧
+.memberPosts {
+  &__title {
+    display: flex;
+    align-items: baseline;
+    gap: space("small");
+    margin: 0 0 space("medium");
+    padding-block-end: space("small");
+    border-block-end: 2px solid rgba(map-get($theme-colors, "primary"), 0.15);
+    background: linear-gradient(theme-color("primary"), theme-color("primary")) left bottom / 6rem 2px no-repeat;
+    font-weight: 700;
+    font-size: font-size("large");
+    letter-spacing: 0.08em;
+  }
+
+  &__count {
+    color: theme-color("dark");
+    font-weight: 400;
+    font-size: font-size("small");
+  }
+
+  &__empty {
+    margin: 0;
+    color: theme-color("dark");
+    text-align: center;
+  }
+}
