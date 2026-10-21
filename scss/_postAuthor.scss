@@ -84,4 +84,11 @@
       text-decoration: underline;
     }
   }
+
+  // 隊員ごとの記事一覧へのリンク
+  &__more {
+    margin: space("small") 0 0;
+    font-size: font-size("small");
+    text-align: right;
+  }
 }

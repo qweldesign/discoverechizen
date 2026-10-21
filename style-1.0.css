@@ -1675,6 +1675,104 @@ button, input, select, textarea {
   color: var(--color--primary-dark);
   text-decoration: underline;
 }
+.postAuthor__more {
+  margin: var(--spacing--small) 0 0;
+  font-size: var(--font-size--small);
+  text-align: right;
+}
+
+/**
+ * Project - Member Profile
+ * 隊員ごとの記事一覧 (/member/xxx/): 上のプロフィール (.memberProfile) と, 下の記事一覧 (.memberPosts)
+ * 記事一覧のカードはブログの一覧と同じ (.postList)
+ */
+.memberProfile {
+  display: grid;
+  gap: var(--spacing--medium) var(--spacing--large);
+  justify-items: center;
+  max-width: 48rem;
+  margin: var(--spacing--large) auto var(--spacing--x-large);
+  padding: var(--spacing--large) var(--spacing--medium);
+  border-radius: var(--spacing--medium);
+  background-color: rgba(55, 190, 240, 0.1);
+}
+@media (min-width: 900px) {
+  .memberProfile {
+    grid-template-columns: 12rem minmax(0, 1fr);
+    align-items: center;
+    justify-items: stretch;
+    padding: var(--spacing--large);
+  }
+}
+.memberProfile__image {
+  width: 9rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+@media (min-width: 900px) {
+  .memberProfile__image {
+    width: 100%;
+  }
+}
+.memberProfile__body {
+  width: 100%;
+  min-width: 0;
+}
+.memberProfile__role {
+  margin: 0;
+  color: var(--color--dark);
+  font-size: var(--font-size--small);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
+}
+.memberProfile__name {
+  margin: 0 0 var(--spacing--small);
+  font-weight: 700;
+  font-size: var(--font-size--x-large);
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+}
+.memberProfile__text {
+  font-size: var(--font-size--small);
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+.memberProfile__text p {
+  margin: 0;
+}
+.memberProfile__text p + p {
+  margin-block-start: var(--spacing--small);
+}
+.memberProfile__text a {
+  color: var(--color--primary-dark);
+  text-decoration: underline;
+}
+
+.memberPosts__title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing--small);
+  margin: 0 0 var(--spacing--medium);
+  padding-block-end: var(--spacing--small);
+  border-block-end: 2px solid rgba(55, 190, 240, 0.15);
+  background: linear-gradient(var(--color--primary), var(--color--primary)) left bottom/6rem 2px no-repeat;
+  font-weight: 700;
+  font-size: var(--font-size--large);
+  letter-spacing: 0.08em;
+}
+.memberPosts__count {
+  color: var(--color--dark);
+  font-weight: 400;
+  font-size: var(--font-size--small);
+}
+.memberPosts__empty {
+  margin: 0;
+  color: var(--color--dark);
+  text-align: center;
+}
 
 /**
  * Component - Backdrop
@@ -1901,6 +1999,12 @@ button, input, select, textarea {
   font-size: var(--font-size--medium);
   line-height: 1.8;
   letter-spacing: 0.08em;
+}
+.memberList__more {
+  margin: calc(-1 * var(--spacing--small)) 0 0;
+  padding: 0 var(--spacing--medium) var(--spacing--medium);
+  font-size: var(--font-size--small);
+  text-align: right;
 }
 .memberList__text {
   padding: var(--spacing--small) var(--spacing--medium) var(--spacing--medium);

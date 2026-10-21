@@ -205,6 +205,14 @@ $aboutUs-wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
     letter-spacing: 0.08em;
   }
 
+  // 記事を書いている隊員は, カードの下に隊員ごとの記事一覧へのリンク
+  &__more {
+    margin: calc(-1 * #{space("small")}) 0 0;
+    padding: 0 space("medium") space("medium");
+    font-size: font-size("small");
+    text-align: right;
+  }
+
   &__text {
     padding: space("small") space("medium") space("medium");
     font-size: font-size("small");

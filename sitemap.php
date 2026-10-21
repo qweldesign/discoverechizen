@@ -26,6 +26,15 @@ foreach (array_keys(SITE_POST_TYPES) as $type) {
   }
 }
 
+// 隊員ごとの記事一覧 (/member/xxx/. 更新日は, その隊員の最新の記事の日付)
+$allPosts = (new ContentLoader(__DIR__ . '/' . trim(post_type(MEMBER_POST_TYPE)['dir'], '/')))->load();
+foreach (members() as $member) {
+  $slug = $member['slug'] ?? '';
+  if ($slug === '') continue;
+  $memberPosts = array_values(array_filter($allPosts, fn($post) => in_array($slug, author_slugs($post['author'] ?? ''), true)));
+  $urls[] = ['path' => member_path($slug), 'date' => $memberPosts[0]['date'] ?? ''];
+}
+
 // 投稿タイプ以外のページ (config.php の SITE_PAGES)
 foreach (SITE_PAGES as $pagePath) {
   $urls[] = ['path' => $pagePath, 'date' => ''];

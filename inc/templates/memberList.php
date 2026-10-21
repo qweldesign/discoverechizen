@@ -7,6 +7,7 @@
  *
  * 隊員プロフィールの一覧 (.memberList). 隊員は members() で取得する
  * $class: 一覧に足すクラス (例: is-scroll でタブレット以下を横スクロールにする)
+ * 記事を書いている隊員は, カードの下に隊員ごとの記事一覧 (/member/xxx/) へのリンクを置く
  */
 
 require_once dirname(__DIR__) . '/partials/site.php';
@@ -28,6 +29,10 @@ function render_member_list(array $members, string $class = ''): void {
             <div class="memberList__text">
 <?= $parsedown->text($member['content'] ?? '') ?>
             </div>
+<?php $postCount = member_post_counts()[$member['slug'] ?? ''] ?? 0; ?>
+<?php if ($postCount > 0) { ?>
+            <p class="memberList__more"><a class="moreLink" href="<?= e(member_url($member['slug'])) ?>"><span class="moreLink__label">記事を見る（<?= (int)$postCount ?>件）</span></a></p>
+<?php } ?>
           </li>
 <?php } ?>
         </ul>

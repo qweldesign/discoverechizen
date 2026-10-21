@@ -1,0 +1,24 @@
+# 隊員ごとの記事一覧の URL を整える (Apache の mod_rewrite が必要)
+#   ./xxx/         → index.php?member=xxx          (1ページ目)
+#   ./xxx/page/2/  → index.php?member=xxx&page=2   (2ページ目以降)
+#   ./             → トップページの「隊員紹介」へ転送
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # このディレクトリの URL (例: /member/) を BASE に入れる (RewriteBase を書かずに済むように)
+  RewriteCond %{REQUEST_URI}::$1 ^(.*?/)(.*)::\2$
+  RewriteRule ^(.*)$ - [E=BASE:%1]
+
+  # 末尾のスラッシュがない場合は付けて転送する (URL の表記を1つに揃える)
+  RewriteRule ^([A-Za-z0-9_-]+(?:/page/[0-9]+)?)$ %{ENV:BASE}$1/ [R=301,L]
+
+  # 1ページ目を page/1/ で来た場合は, 1ページ目の URL へ転送する
+  RewriteRule ^([A-Za-z0-9_-]+)/page/1/$ %{ENV:BASE}$1/ [R=301,L]
+
+  # ページ送り
+  RewriteRule ^([A-Za-z0-9_-]+)/page/([0-9]+)/$ index.php?member=$1&page=$2 [L,QSA]
+
+  # 1ページ目 (slug は英数字, ハイフン, アンダースコア)
+  RewriteRule ^([A-Za-z0-9_-]+)/$ index.php?member=$1 [L,QSA]
+</IfModule>
