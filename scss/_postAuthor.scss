@@ -1,6 +1,6 @@
 /**
  * Project - Post Author
- * 記事の下の「この記事を書いた人」
+ * 記事の下の「この記事に出てきた人」と「この記事を書いた人」(どちらも同じ形のプロフィール)
  */
 
 .postAuthor {
@@ -90,5 +90,12 @@
     margin: space("small") 0 0;
     font-size: font-size("small");
     text-align: right;
+  }
+
+  // 書いた人と出てきた人の間の区切り
+  &__section + &__section {
+    margin-block-start: space("medium");
+    padding-block-start: space("medium");
+    border-block-start: 1px solid rgba(map-get($theme-colors, "primary"), 0.2);
   }
 }

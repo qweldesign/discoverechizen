@@ -73,7 +73,7 @@ function render_posts(string $type, array $options = []): void {
           <div class="entry">
 <?= $cms->get_content() ?>
           </div>
-<?php render_post_author(post_authors($cms->get_meta('author'))); ?>
+<?php render_post_author(post_author_roles($cms->get_meta('author'))); ?>
 <?php if ($options['adjacent'] ?? true) { ?>
 <?php $adjacent = $cms->get_adjacent(); ?>
           <nav class="postNav" aria-label="前後の記事">
