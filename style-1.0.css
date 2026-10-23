@@ -1603,7 +1603,7 @@ button, input, select, textarea {
 
 /**
  * Project - Post Author
- * 記事の下の「この記事を書いた人」
+ * 記事の下の「この記事に出てきた人」と「この記事を書いた人」(どちらも同じ形のプロフィール)
  */
 .postAuthor {
   margin-block: var(--spacing--large) 0;
@@ -1679,6 +1679,11 @@ button, input, select, textarea {
   margin: var(--spacing--small) 0 0;
   font-size: var(--font-size--small);
   text-align: right;
+}
+.postAuthor__section + .postAuthor__section {
+  margin-block-start: var(--spacing--medium);
+  padding-block-start: var(--spacing--medium);
+  border-block-start: 1px solid rgba(55, 190, 240, 0.2);
 }
 
 /**
