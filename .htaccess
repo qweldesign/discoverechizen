@@ -18,4 +18,11 @@
 
   # サイトマップは sitemap.php が content/ から自動で作る
   RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+  # 旧サイトの「越前海岸について」はトップページへ, 「教育旅行」は新しい教育旅行のページへ転送する
+  RewriteRule ^echizen-coast/?$ %{ENV:BASE} [R=301,L]
+  RewriteRule ^school-excursion/?$ %{ENV:BASE}study-tour/ [R=301,L]
+
+  # 旧サイトの「はりいしゃレジデンシー」「人の駅プロジェクト」は, hariisha.jp へ恒久的に転送する
+  RewriteRule ^(?:hariisha-residency|people-platform)(?:/.*)?$ https://hariisha.jp/ [R=301,L]
 </IfModule>
